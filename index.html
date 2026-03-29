@@ -59,8 +59,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .motion-blur { animation: blurPulse 0.1s infinite alternate; }
-        @keyframes blurPulse { 0% { filter: blur(0px); } 100% { filter: blur(3px); } }
+        .motion-blur { animation: blurPulse 0.05s infinite alternate; }
+        @keyframes blurPulse { 0% { filter: blur(0px); transform: translateY(1px); } 100% { filter: blur(3px); transform: translateY(-1px); } }
+        
         .hyper-shake { animation: extremeShake 0.1s infinite; }
         @keyframes extremeShake {
             0% { transform: translate(2px, 1px) rotate(0deg); }
@@ -68,10 +69,11 @@
             100% { transform: translate(1px, -2px) rotate(1deg); }
         }
 
-        /* Custom Scrollbar for Textarea */
         textarea::-webkit-scrollbar { width: 6px; }
         textarea::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 8px; }
         textarea::-webkit-scrollbar-thumb { background: rgba(234, 179, 8, 0.5); border-radius: 8px; }
+        
+        #rolling-name { transition: transform 0.05s ease-out; }
     </style>
 </head>
 <body class="font-sans antialiased h-screen selection:bg-brand-500/30 flex flex-col relative overflow-hidden">
@@ -148,14 +150,12 @@
 
         <!-- INTERACTIVE STATS BOXES -->
         <div class="flex gap-4 md:gap-8 max-w-lg w-full justify-center px-2">
-            <!-- Tombol Tersedia -->
             <button onclick="showInteractiveList('ready')" class="flex-1 glass p-3 md:p-4 rounded-[1.5rem] border border-white/10 hover:border-brand-500/50 hover:bg-white/5 transition-all group relative overflow-hidden text-center cursor-pointer shadow-lg hover:shadow-brand-500/20">
                 <div class="absolute inset-0 bg-brand-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <p class="text-3xl md:text-5xl font-display font-bold text-white mb-1 drop-shadow" id="count-ready">0</p>
                 <p class="text-[9px] md:text-xs font-black uppercase tracking-widest opacity-60 group-hover:text-brand-400 group-hover:opacity-100 transition-colors">Tersedia</p>
             </button>
             
-            <!-- Tombol Sudah Pernah -->
             <button onclick="showInteractiveList('done')" class="flex-1 glass p-3 md:p-4 rounded-[1.5rem] border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group relative overflow-hidden text-center cursor-pointer shadow-lg">
                 <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <p class="text-3xl md:text-5xl font-display font-bold text-white mb-1 opacity-70 drop-shadow" id="count-done">0</p>
@@ -200,7 +200,6 @@
         
         <div class="relative z-10 w-full flex flex-col items-center justify-center">
             <div class="relative w-full flex items-center justify-center py-8 md:py-16">
-                <!-- Subtitle -->
                 <p id="draw-subtitle" class="absolute -top-10 md:-top-14 left-0 right-0 text-brand-500 tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-lg uppercase opacity-70 font-medium transition-colors text-center px-4">
                     Mengacak Tuan Rumah...
                 </p>
@@ -222,10 +221,10 @@
             <h2 id="host-name-text" class="text-cinematic font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tighter drop-shadow-2xl leading-none break-words px-2">Nama</h2>
 
             <div id="host-controls" class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
-                <button onclick="confirmHost()" class="p-4 bg-brand-500 hover:bg-brand-600 text-white rounded-2xl font-bold text-sm md:text-base shadow-xl shadow-brand-500/30 transition-all hover:-translate-y-1">
+                <button onclick="confirmHost()" class="p-4 md:p-5 bg-brand-500 hover:bg-brand-600 text-white rounded-2xl font-bold text-sm md:text-base shadow-xl shadow-brand-500/30 transition-all hover:-translate-y-1">
                     Bersedia (Buat Undangan)
                 </button>
-                <button onclick="rejectHost()" class="p-4 glass border-white/10 text-white rounded-2xl font-bold text-sm md:text-base hover:bg-red-900/40 hover:text-red-400 hover:border-red-900/50 transition-all group">
+                <button onclick="rejectHost()" class="p-4 md:p-5 glass border-white/10 text-white rounded-2xl font-bold text-sm md:text-base hover:bg-red-900/40 hover:text-red-400 hover:border-red-900/50 transition-all group">
                     Berhalangan / Putar Ulang
                 </button>
             </div>
@@ -240,10 +239,17 @@
                     </h4>
                     
                     <div class="grid grid-cols-2 gap-3">
-                        <div class="space-y-1">
+                        <!-- DROPDOWN PERTEMUAN -->
+                        <div class="space-y-1 relative">
                             <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Pertemuan Ke-</label>
-                            <input type="number" id="f-round" oninput="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm" placeholder="5">
+                            <select id="f-round" onchange="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm text-white appearance-none cursor-pointer transition-colors">
+                                <!-- Diisi otomatis -->
+                            </select>
+                            <div class="absolute right-3 top-8 pointer-events-none opacity-50">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
                         </div>
+
                         <div class="space-y-1">
                             <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Waktu (WIB)</label>
                             <input type="time" id="f-time" oninput="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm">
@@ -254,8 +260,8 @@
                         <input type="date" id="f-date" onchange="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm">
                     </div>
                     <div class="space-y-1">
-                        <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Lokasi / Catatan Maps (Opsional)</label>
-                        <input type="text" id="f-loc" oninput="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm" placeholder="Cth: Rumah Bpk. Suri atau Link Maps">
+                        <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Lokasi / Catatan (Opsional)</label>
+                        <input type="text" id="f-loc" oninput="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm" placeholder="Cth: Rumah Bpk. Suri / Link Maps">
                     </div>
                 </div>
 
@@ -277,7 +283,6 @@
             </div>
         </div>
     </div>
-
     <!-- MEMBER MANAGER MODAL (FULL EDITING & BACKUP) -->
     <div id="modal-manager" class="fixed inset-0 z-[120] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="max-w-md w-full glass rounded-[2rem] p-5 border border-white/10 shadow-2xl transform scale-95 transition-transform duration-300" id="manager-box">
@@ -303,15 +308,22 @@
     </div>
 
     <script>
-        // --- DATA STATE ---
+        // --- DATA STATE (UPDATED DENGAN 14 ANGGOTA) ---
         let members = [
-            { id: 1, name: "Bpk. Suri", hasHosted: false }, { id: 2, name: "Bpk. Moch Soli", hasHosted: false },
-            { id: 3, name: "Bpk. Likasih", hasHosted: false }, { id: 4, name: "Bpk. Misturah", hasHosted: false },
-            { id: 5, name: "Bu Dwi", hasHosted: false }, { id: 6, name: "Bpk. Agus", hasHosted: false },
-            { id: 7, name: "Bpk. Hali Faturahman", hasHosted: false }, { id: 8, name: "Bpk. Yono", hasHosted: false },
-            { id: 9, name: "Bpk. Kholil", hasHosted: false }, { id: 10, name: "Bpk. Reza", hasHosted: false },
-            { id: 11, name: "Bpk. Gita Rizki", hasHosted: false }, { id: 12, name: "Bpk. Widad", hasHosted: false },
-            { id: 13, name: "Bpk. Ardita", hasHosted: false }
+            { id: 1, name: "Bpk. Suri", hasHosted: false }, 
+            { id: 2, name: "Bpk. Moch Soli", hasHosted: false },
+            { id: 3, name: "Bu Lik Asih", hasHosted: false }, // Updated
+            { id: 4, name: "Bpk. Misturah", hasHosted: false },
+            { id: 5, name: "Bu Dwi", hasHosted: false }, 
+            { id: 6, name: "Bpk. Agus", hasHosted: false },
+            { id: 7, name: "Bpk. Hali Faturahman", hasHosted: false }, 
+            { id: 8, name: "Bpk. Yono", hasHosted: false },
+            { id: 9, name: "Bpk. Kholil", hasHosted: false }, 
+            { id: 10, name: "Bpk. Reza", hasHosted: false },
+            { id: 11, name: "Bpk. Gita Rizki", hasHosted: false }, 
+            { id: 12, name: "Bpk. Widad", hasHosted: false },
+            { id: 13, name: "Bpk. Ardita", hasHosted: false },
+            { id: 14, name: "Bpk. Fahmi Rizki", hasHosted: false } // New Member
         ];
 
         let currentWinnerName = "";
@@ -357,22 +369,34 @@
         document.addEventListener('fullscreenchange', (event) => {
             const icon = document.getElementById('fs-icon');
             if (document.fullscreenElement) {
-                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`; // Close icon approx
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`;
             } else {
                 icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>`;
             }
         });
 
-        // --- CORE LOGIC ---
+        // --- CORE LOGIC WITH AUTO MIGRATION ---
         function init() {
-            const savedData = localStorage.getItem('arisan_v13_ultimate');
-            if(savedData) members = JSON.parse(savedData);
+            const savedData = localStorage.getItem('arisan_v17_perfect_suspense');
+            if(savedData) {
+                let parsed = JSON.parse(savedData);
+                
+                // MIGRATION: Update "Bpk. Likasih" to "Bu Lik Asih" preserving status
+                const idx3 = parsed.findIndex(m => m.id === 3);
+                if(idx3 !== -1) parsed[idx3].name = "Bu Lik Asih";
+                
+                // MIGRATION: Ensure 14th member exists without overwriting current data
+                if(!parsed.some(m => m.id === 14)) {
+                    parsed.push({ id: 14, name: "Bpk. Fahmi Rizki", hasHosted: false });
+                }
+                members = parsed;
+            }
             document.getElementById('f-date').valueAsDate = new Date();
             updateDashboardStats();
         }
 
         function saveData() {
-            localStorage.setItem('arisan_v13_ultimate', JSON.stringify(members));
+            localStorage.setItem('arisan_v17_perfect_suspense', JSON.stringify(members));
         }
 
         function updateDashboardStats() {
@@ -383,7 +407,6 @@
             document.getElementById('count-done').innerText = done;
             saveData();
         }
-
         // --- INTERACTIVE POPUP LIST ---
         function showInteractiveList(type) {
             activeListType = type;
@@ -452,7 +475,9 @@
             renderInteractiveListContent(); 
         }
 
-        // --- NEW PROFESSIONAL ROULETTE ENGINE ---
+        // --- NEW: THE "PERFECT SUSPENSE" ENGINE ---
+        // Algoritma ini menjamin putaran yang panjang (±10 detik), pengereman yang sangat mulus di akhir, 
+        // dan pergeseran nama 1 per 1 tanpa lompat sehingga tidak terkesan dicurangi.
         function initiateDraw(isHyperMode = false) {
             if(audioCtx.state === 'suspended') audioCtx.resume();
             if(!isHyperMode) rejectedThisRound = [];
@@ -460,7 +485,7 @@
             const eligible = members.filter(m => !m.hasHosted && !rejectedThisRound.includes(m.name));
             
             if (eligible.length === 0) {
-                alert("Semua anggota telah terpilih atau sedang dikecualikan! Harap kembalikan status anggota pada kotak 'Sudah Pernah'.");
+                alert("Semua anggota telah terpilih atau sedang dikecualikan! Harap kembalikan status anggota.");
                 return;
             }
 
@@ -469,7 +494,7 @@
             setTimeout(() => {
                 const rollingName = document.getElementById('rolling-name');
                 rollingName.classList.add('motion-blur');
-                runProRouletteEngine(eligible, isHyperMode ? 9000 : 7000, isHyperMode);
+                runPerfectSuspenseEngine(eligible, isHyperMode);
             }, 500);
         }
 
@@ -510,65 +535,73 @@
             }
         }
 
-        function runProRouletteEngine(eligibleNames, totalDuration, isHyper) {
+        function runPerfectSuspenseEngine(eligibleNames, isHyper) {
             const rollingName = document.getElementById('rolling-name');
+
+            // 1. Tentukan pemenang (secara random adil)
             const winnerIndex = Math.floor(Math.random() * eligibleNames.length);
             const winner = eligibleNames[winnerIndex];
 
-            const trackLength = isHyper ? 90 : 70;
-            const displaySequence = [];
+            // 2. Bangun urutan pergantian (Sequence)
+            const totalTicks = isHyper ? 40 : 75; // 75 Ticks akan makan waktu sekitar ~10 detik
+            const sequence = [];
             let lastAdded = "";
 
-            for (let i = 0; i < trackLength - 1; i++) {
+            for (let i = 0; i < totalTicks - 1; i++) {
                 let nextName;
                 do {
                     nextName = eligibleNames[Math.floor(Math.random() * eligibleNames.length)].name;
-                } while (nextName === lastAdded && eligibleNames.length > 1);
-                displaySequence.push(nextName);
+                } while (nextName === lastAdded && eligibleNames.length > 1); // Jangan ada nama kembar dempet
+                sequence.push(nextName);
                 lastAdded = nextName;
             }
-
-            if (eligibleNames.length > 1) {
-                let teaseName;
-                do {
-                    teaseName = eligibleNames[Math.floor(Math.random() * eligibleNames.length)].name;
-                } while (teaseName === winner.name);
-                displaySequence[displaySequence.length - 1] = teaseName;
+            // Pastikan 1 nama terakhir sebelum berhenti BUKAN nama pemenang (agar natural)
+            if(eligibleNames.length > 1 && sequence[sequence.length - 1] === winner.name) {
+                let altName = eligibleNames.find(n => n.name !== winner.name).name;
+                sequence[sequence.length - 1] = altName;
             }
+            
+            sequence.push(winner.name); // Nama terakhir pasti pemenang
 
-            displaySequence.push(winner.name);
+            let currentTick = 0;
 
-            const startTime = performance.now();
-            let lastIndexRendered = -1;
+            function tick() {
+                // Tampilkan nama di layar
+                rollingName.innerText = sequence[currentTick];
+                
+                // Efek detak jantung visual
+                rollingName.style.transform = `scale(1.05)`;
+                setTimeout(() => { rollingName.style.transform = 'scale(1)'; }, 50);
 
-            function easeOutQuint(x) { return 1 - Math.pow(1 - x, 5); }
+                // Progress dari 0.0 sampai 1.0
+                const progress = currentTick / (totalTicks - 1);
+                
+                // Suara merendah seiring berjalannya waktu
+                const pitch = 800 - (progress * 500); 
+                playBeep(pitch, 0.05, 'square');
 
-            function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const timeProgress = Math.min(elapsed / totalDuration, 1);
-                const easeProgress = easeOutQuint(timeProgress);
-                const currentIndex = Math.floor(easeProgress * (displaySequence.length - 1));
+                currentTick++;
 
-                if (currentIndex !== lastIndexRendered) {
-                    rollingName.innerText = displaySequence[currentIndex];
-                    lastIndexRendered = currentIndex;
+                if (currentTick < totalTicks) {
+                    // MENGHITUNG JEDA (DELAY) MENUJU NAMA SELANJUTNYA
+                    // Dimulai dari sangat cepat (40ms) menuju sangat lambat (1200ms)
+                    const baseDelay = isHyper ? 30 : 40;
+                    const maxDelay = isHyper ? 600 : 1200;
                     
-                    const pitch = 800 - (easeProgress * 600); 
-                    playBeep(pitch, 0.05, 'square');
+                    // Pangkat 5 (power 5) membuat pengereman baru terasa ekstrem di detik-detik terakhir
+                    const easingPower = isHyper ? 3 : 5; 
                     
-                    rollingName.style.transform = `scale(${1.02 + (0.05 * Math.random())})`;
-                    setTimeout(() => { rollingName.style.transform = 'scale(1)'; }, 50);
-                }
-
-                if (timeProgress < 1) {
-                    requestAnimationFrame(update);
+                    const delay = baseDelay + (Math.pow(progress, easingPower) * maxDelay);
+                    
+                    setTimeout(tick, delay);
                 } else {
                     currentWinnerName = winner.name;
-                    rollingName.innerText = currentWinnerName; 
                     finishDraw(isHyper);
                 }
             }
-            requestAnimationFrame(update);
+
+            // Memulai mesin
+            tick();
         }
 
         function finishDraw(wasHyper) {
@@ -580,6 +613,7 @@
             rollingName.classList.remove('motion-blur');
             drawScreen.classList.remove('hyper-shake');
             
+            // Beri jeda 1 detik di layar nama sebelum muncul modal pemenang (menambah kepuasan)
             setTimeout(() => {
                 drawScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -603,17 +637,41 @@
                     playSuccessSound();
                     celebrate();
                 }, 500);
-            }, 1000);
+            }, 1200); 
+        }
+
+        // --- NEW: AUTO POPULATE DROPDOWN ROUND ---
+        function populateRoundSelect() {
+            const select = document.getElementById('f-round');
+            select.innerHTML = '';
+            
+            const totalMembers = members.length;
+            const currentHostedCount = members.filter(m => m.hasHosted).length;
+            
+            for(let i = 1; i <= totalMembers; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.text = `Pertemuan Ke-${i}`;
+                option.className = "bg-[#0f172a] text-white"; 
+                
+                // Pilih otomatis berdasarkan jumlah keluarga yang sudah hosting
+                if(i === currentHostedCount) option.selected = true;
+                
+                select.appendChild(option);
+            }
         }
 
         function confirmHost() {
             const idx = members.findIndex(m => m.name === currentWinnerName);
-            if(idx !== -1) members[idx].hasHosted = true;
+            if(idx !== -1) members[idx].hasHosted = true; 
             
             document.getElementById('host-controls').classList.add('hidden');
+            
+            populateRoundSelect();
+            
             document.getElementById('wa-form').classList.remove('hidden');
             updateDashboardStats();
-            generateWAPreview(); // Initial generation
+            generateWAPreview(); 
         }
 
         function rejectHost() {
@@ -646,29 +704,7 @@
                 dashboard.style.opacity = '1';
             }, 500);
         }
-
-        // --- UTILS ---
-        function celebrate() {
-            const duration = 5 * 1000;
-            const animationEnd = Date.now() + duration;
-            const colors = ['#facc15', '#ffffff', '#ca8a04'];
-            (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors, zIndex: 1000 });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors, zIndex: 1000 });
-                if (Date.now() < animationEnd) requestAnimationFrame(frame);
-            }());
-        }
-
-        function toggleTheme() { document.documentElement.classList.toggle('light'); }
-
-        function toggleSound() {
-            soundEnabled = !soundEnabled;
-            document.getElementById('sound-icon-path').setAttribute('d', soundEnabled 
-                ? "M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" 
-                : "M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2");
-        }
-
-        // --- MEMBER MANAGER (FULL EDITING MODAL) ---
+         // --- MEMBER MANAGER ---
         function showMemberManager() {
             const list = document.getElementById('manage-list');
             list.innerHTML = members.map(m => `
@@ -739,7 +775,7 @@
         function exportData() {
             const dataStr = JSON.stringify(members);
             navigator.clipboard.writeText(dataStr).then(() => {
-                alert("Data berhasil disalin! Kirim teks ini ke HP lain jika ingin memindahkan data.");
+                alert("Data berhasil disalin! Kirim teks (kode) ini ke perangkat lain jika ingin memindahkan data.");
             }).catch(err => {
                 alert("Gagal menyalin: " + err);
             });
@@ -754,7 +790,7 @@
                         members = parsed;
                         updateDashboardStats();
                         showMemberManager();
-                        alert("Data berhasil dikembalikan!");
+                        alert("Data berhasil dikembalikan secara sempurna!");
                     } else {
                         alert("Format data tidak sesuai.");
                     }
@@ -764,9 +800,9 @@
             }
         }
 
-        // --- WA INVITE WITH PREVIEW ---
+        // --- WA INVITE WITH EDITABLE PREVIEW ---
         function generateWAPreview() {
-            const round = document.getElementById('f-round').value || "[Ke-...]";
+            const round = document.getElementById('f-round').value || "?";
             const time = document.getElementById('f-time').value || "[... WIB]";
             const dateVal = document.getElementById('f-date').value;
             const loc = document.getElementById('f-loc').value || "Sesuai kesepakatan keluarga";
@@ -779,7 +815,7 @@
                 dateStr = `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
             }
 
-            const msg = `*UNDANGAN SILATURAHMI BANI SUBANDI*\n\nAssalamualaikum Wr. Wb.\n\nAlhamdulillah, hasil penentuan sistem arisan menetapkan tuan rumah untuk pertemuan silaturahmi kita selanjutnya:\n\n🏠 *SOHIBUL BAIT:* ${currentWinnerName}\n🔢 *PERTEMUAN KE:* ${round}\n📅 *HARI/TGL:* ${dateStr}\n⏰ *WAKTU:* ${time} - Selesai\n📍 *LOKASI/CATATAN:* ${loc}\n\nBesar harapan kami agar seluruh anggota keluarga dapat meluangkan waktu untuk hadir demi menjaga dan mempererat tali silaturahmi.\n\nWassalamualaikum Wr. Wb.`;
+            const msg = `*UNDANGAN SILATURAHMI BANI SUBANDI*\n\nAssalamualaikum Wr. Wb.\n\nAlhamdulillah, hasil penentuan sistem arisan telah menetapkan tuan rumah untuk pertemuan silaturahmi kita selanjutnya:\n\n🏠 *SOHIBUL BAIT:* ${currentWinnerName}\n🔢 *PERTEMUAN KE:* ${round}\n📅 *HARI/TGL:* ${dateStr}\n⏰ *WAKTU:* ${time} - Selesai\n📍 *LOKASI/CATATAN:* ${loc}\n\nBesar harapan kami agar seluruh anggota keluarga dapat meluangkan waktu untuk hadir demi menjaga dan mempererat tali silaturahmi.\n\nWassalamualaikum Wr. Wb.`;
             
             document.getElementById('wa-preview-text').value = msg;
         }
@@ -794,5 +830,3 @@
     </script>
 </body>
 </html>
-
-
