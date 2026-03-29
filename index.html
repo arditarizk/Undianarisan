@@ -1,33 +1,26 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undian Arisan Keluarga Bani Subandi</title>
-    <!-- Tailwind CSS -->
+    <title>Penentuan Tuan Rumah Arisan Bani Subandi</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         display: ['Oswald', 'sans-serif'],
                     },
                     colors: {
-                        dark: '#0f172a',
-                        darker: '#020617',
-                        gold: {
-                            300: '#fde047',
-                            400: '#facc15',
-                            500: '#eab308',
-                            600: '#ca8a04',
-                        }
+                        brand: { 50: '#fefce8', 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 900: '#713f12' },
+                        dark: { bg: '#020617', card: '#0f172a', border: '#1e293b' }
                     }
                 }
             }
@@ -35,247 +28,283 @@
     </script>
 
     <style>
-        body {
-            background-color: #020617;
-            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 70%);
-            color: #f8fafc;
-            min-height: 100vh;
+        body { 
+            background-color: #020617; color: #f8fafc; transition: all 0.5s ease;
+            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #020617 80%);
+        }
+        .light body { background-color: #f8fafc; color: #0f172a; background-image: none; }
+        
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .light .glass { background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.05); }
+
+        .btn-gold { 
+            background: linear-gradient(90deg, #ca8a04, #facc15, #ca8a04);
+            background-size: 200% 100%; animation: shimmer 3s infinite linear;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
-        ::-webkit-scrollbar-thumb { background: rgba(234, 179, 8, 0.3); border-radius: 10px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .particle { position: fixed; pointer-events: none; z-index: 0; opacity: 0.15; }
 
-        /* Cinematic Text Effect */
+        @keyframes shimmer { 0% { backgroundPosition: '-200% 0' } 100% { backgroundPosition: '200% 0' } }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg) } 50% { transform: translateY(-20px) rotate(5deg) } }
+        .animate-float { animation: float 10s ease-in-out infinite; }
+
         .text-cinematic {
             background: linear-gradient(to bottom, #fde047, #ca8a04);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 4px 20px rgba(234, 179, 8, 0.3);
         }
-        
-        /* Hyper Text Effect */
         .text-hyper {
             background: linear-gradient(to bottom, #ff4d4d, #990000);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 0px 30px rgba(255, 0, 0, 0.8);
         }
-
-        /* Blur animation for normal drawing */
-        .motion-blur {
-            animation: blurPulse 0.1s infinite alternate;
-        }
-        @keyframes blurPulse {
-            0% { filter: blur(0px); opacity: 1; transform: scale(1); }
-            100% { filter: blur(2px); opacity: 0.8; transform: scale(1.02); }
-        }
-
-        /* Extreme Shake for Hyper Draw */
+        .motion-blur { animation: blurPulse 0.1s infinite alternate; }
+        @keyframes blurPulse { 0% { filter: blur(0px); } 100% { filter: blur(3px); } }
+        .hyper-shake { animation: extremeShake 0.1s infinite; }
         @keyframes extremeShake {
             0% { transform: translate(2px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(0px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(2px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(2px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-        .hyper-shake {
-            animation: extremeShake 0.1s infinite;
+            50% { transform: translate(-2px, 2px) rotate(-1deg); }
+            100% { transform: translate(1px, -2px) rotate(1deg); }
         }
 
-        /* Winner Reveal Animation */
-        .reveal-winner {
-            animation: cinematicReveal 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-        @keyframes cinematicReveal {
-            0% { transform: scale(0.8) translateY(20px); opacity: 0; filter: blur(10px); }
-            50% { transform: scale(1.05) translateY(0); opacity: 1; filter: blur(0px); text-shadow: 0 0 50px rgba(250, 204, 21, 0.8); }
-            100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0px); text-shadow: 0 0 20px rgba(250, 204, 21, 0.4); }
-        }
-
-        /* Checkbox & Input styling */
-        .premium-checkbox {
-            appearance: none;
-            width: 1.25rem;
-            height: 1.25rem;
-            border: 2px solid #475569;
-            border-radius: 0.25rem;
-            background-color: transparent;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s;
-        }
-        .premium-checkbox:checked { background-color: #eab308; border-color: #eab308; }
-        .premium-checkbox:checked::after {
-            content: '✓'; position: absolute; color: #000; font-size: 0.875rem; font-weight: bold; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        }
-
-        .input-premium {
-            background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(71, 85, 105, 0.5); color: white; transition: all 0.3s;
-        }
-        .input-premium:focus {
-            outline: none; border-color: #eab308; box-shadow: 0 0 10px rgba(234, 179, 8, 0.2); background: rgba(15, 23, 42, 0.8);
-        }
-        ::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; cursor: pointer; }
-        ::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+        /* Custom Scrollbar for Textarea */
+        textarea::-webkit-scrollbar { width: 6px; }
+        textarea::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 8px; }
+        textarea::-webkit-scrollbar-thumb { background: rgba(234, 179, 8, 0.5); border-radius: 8px; }
     </style>
 </head>
-<body class="flex flex-col items-center py-8 px-4 relative overflow-x-hidden">
+<body class="font-sans antialiased h-screen selection:bg-brand-500/30 flex flex-col relative overflow-hidden">
+    
+    <!-- Floating Background Decor -->
+    <div class="particle animate-float top-10 left-10 w-32 h-32 md:w-64 md:h-64 bg-brand-500/20 rounded-full blur-3xl"></div>
+    <div class="particle animate-float bottom-10 right-10 w-48 h-48 md:w-80 md:h-80 bg-blue-500/10 rounded-full blur-3xl" style="animation-delay: -2s"></div>
 
-    <!-- Header -->
-    <header class="text-center mb-10 mt-4 z-10 w-full">
-        <h2 class="text-gold-400 text-sm md:text-base font-bold tracking-[0.3em] uppercase mb-2">Grand Draw</h2>
-        <h1 class="font-display text-4xl md:text-6xl font-bold text-cinematic tracking-wide leading-tight">ARISAN KELUARGA<br>BANI SUBANDI</h1>
-    </header>
-
-    <!-- Main Content (Dashboard) -->
-    <div id="dashboard" class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-3 gap-8 z-10 transition-opacity duration-500">
-        <!-- Sidebar: Daftar Anggota -->
-        <div class="lg:col-span-1 bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col h-[500px]">
-            <div class="flex justify-between items-end mb-6 pb-4 border-b border-slate-800">
-                <div>
-                    <h3 class="text-xl font-bold text-white">Daftar Anggota</h3>
-                    <p class="text-sm text-slate-400 mt-1">Tandai jika sudah terpilih</p>
-                </div>
-                <div class="text-right">
-                    <span id="eligible-count" class="text-2xl font-display font-bold text-gold-400">0</span>
-                    <span class="text-xs text-slate-500 block">Tersedia</span>
-                </div>
+    <!-- Navigation -->
+    <nav class="relative z-20 p-4 md:p-6 flex justify-between items-center w-full max-w-7xl mx-auto">
+        <div class="flex items-center gap-3 md:gap-4">
+            <div class="w-10 h-10 md:w-12 md:h-12 btn-gold rounded-xl flex items-center justify-center shadow-xl">
+                <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             </div>
-            <div id="members-list" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-4"></div>
-            <div class="pt-4 border-t border-slate-800 flex gap-2">
-                <button onclick="resetData()" class="flex-1 py-2 px-4 rounded-xl border border-red-900/50 bg-red-900/20 text-red-400 hover:bg-red-900/40 hover:text-red-300 transition text-sm font-medium">
-                    Reset Semua Data
-                </button>
+            <div>
+                <h2 class="font-display font-bold text-lg md:text-xl tracking-tight leading-none">BANI SUBANDI</h2>
+                <p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] opacity-60 text-brand-500">Sistem Arisan Pro</p>
             </div>
         </div>
+        
+        <div class="flex gap-2">
+            <!-- Fullscreen Toggle -->
+            <button onclick="toggleFullscreen()" class="p-2.5 glass rounded-xl hover:bg-white/10 transition-colors" title="Layar Penuh">
+                <svg id="fs-icon" class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+            </button>
+            
+            <!-- Kelola Data Button -->
+            <button onclick="showMemberManager()" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-colors text-xs font-bold uppercase tracking-widest">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                Kelola Data
+            </button>
+            <button onclick="showMemberManager()" class="sm:hidden p-2.5 glass rounded-xl hover:bg-white/10 transition-colors" title="Kelola Data">
+                <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
+            </button>
 
-        <!-- Area Utama: Undian -->
-        <div class="lg:col-span-2 bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl flex flex-col items-center justify-center relative overflow-hidden min-h-[500px]">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gold-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()" class="p-2.5 glass rounded-xl hover:bg-white/10 transition-colors" title="Ubah Tema">
+                <svg id="sun-icon" class="w-4 h-4 text-brand-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" stroke-width="2"></path></svg>
+                <svg id="moon-icon" class="w-4 h-4 text-slate-700 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-width="2"></path></svg>
+            </button>
+            <!-- Sound Toggle -->
+            <button onclick="toggleSound()" id="sound-toggle" class="p-2.5 glass rounded-xl hover:bg-white/10 transition-colors" title="Suara">
+                <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path id="sound-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+            </button>
+        </div>
+    </nav>
 
-            <div class="text-center z-10 w-full">
-                <p class="text-slate-400 text-lg mb-8">Siapakah yang akan menjadi tuan rumah selanjutnya?</p>
-                <div class="relative w-full max-w-md mx-auto mb-12">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 rounded-2xl blur opacity-30"></div>
-                    <button onclick="initiateDraw(false)" class="relative w-full bg-slate-900 border border-gold-500/50 hover:border-gold-400 text-white font-display text-3xl md:text-4xl py-6 px-8 rounded-2xl transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,204,21,0.3)] hover:-translate-y-1 group overflow-hidden">
-                        <span class="relative z-10 text-cinematic group-hover:text-white transition-colors">MULAI UNDIAN</span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-500 opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                    </button>
+    <!-- Main Centered Content -->
+    <main id="dashboard" class="relative z-10 flex-1 flex flex-col items-center justify-center w-full px-4 transition-opacity duration-500">
+        
+        <!-- Header Text -->
+        <div class="text-center mb-6 md:mb-10">
+            <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight drop-shadow-lg">
+                PENENTUAN <br> <span class="text-brand-400">TUAN RUMAH</span>
+            </h1>
+            <p class="mt-2 md:mt-3 opacity-60 uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold">Siapakah Sohibul Bait Selanjutnya?</p>
+        </div>
+
+        <!-- THE BIG BUTTON -->
+        <div class="relative group mb-8 md:mb-12">
+            <div class="absolute -inset-6 bg-brand-500/20 rounded-full blur-[50px] group-hover:bg-brand-500/40 transition-all duration-700 pointer-events-none"></div>
+            
+            <button onclick="initiateDraw(false)" class="relative z-10 w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 btn-gold rounded-full shadow-[0_20px_50px_rgba(234,179,8,0.3)] hover:scale-105 active:scale-95 transition-all flex flex-col items-center justify-center overflow-hidden border-8 border-white/20">
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-all"></div>
+                
+                <div class="mb-2 md:mb-3 bg-white/10 p-3 md:p-4 rounded-3xl backdrop-blur-md group-hover:scale-110 transition-transform duration-500">
+                    <svg class="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 </div>
+                
+                <span class="text-white font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-[0.2em] drop-shadow-lg">ACAK</span>
+                <span class="text-white/80 text-[8px] md:text-[9px] lg:text-[11px] font-black uppercase tracking-[0.4em] mt-1">Sistem Arisan</span>
+            </button>
+        </div>
+
+        <!-- INTERACTIVE STATS BOXES -->
+        <div class="flex gap-4 md:gap-8 max-w-lg w-full justify-center px-2">
+            <!-- Tombol Tersedia -->
+            <button onclick="showInteractiveList('ready')" class="flex-1 glass p-3 md:p-4 rounded-[1.5rem] border border-white/10 hover:border-brand-500/50 hover:bg-white/5 transition-all group relative overflow-hidden text-center cursor-pointer shadow-lg hover:shadow-brand-500/20">
+                <div class="absolute inset-0 bg-brand-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <p class="text-3xl md:text-5xl font-display font-bold text-white mb-1 drop-shadow" id="count-ready">0</p>
+                <p class="text-[9px] md:text-xs font-black uppercase tracking-widest opacity-60 group-hover:text-brand-400 group-hover:opacity-100 transition-colors">Tersedia</p>
+            </button>
+            
+            <!-- Tombol Sudah Pernah -->
+            <button onclick="showInteractiveList('done')" class="flex-1 glass p-3 md:p-4 rounded-[1.5rem] border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group relative overflow-hidden text-center cursor-pointer shadow-lg">
+                <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <p class="text-3xl md:text-5xl font-display font-bold text-white mb-1 opacity-70 drop-shadow" id="count-done">0</p>
+                <p class="text-[9px] md:text-xs font-black uppercase tracking-widest opacity-40 group-hover:opacity-100 transition-colors">Sudah Pernah</p>
+            </button>
+        </div>
+    </main>
+
+    <!-- FOOTER CREDIT -->
+    <footer class="relative z-10 w-full text-center pb-6">
+        <p class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase opacity-40 hover:opacity-100 transition-opacity">
+            Dirancang oleh <span class="text-brand-500">Ardita Rizki Fauzi</span>
+        </p>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- POPUP INTERAKTIF: DAFTAR NAMA -->
+    <!-- ========================================== -->
+    <div id="modal-interactive-list" class="fixed inset-0 z-[115] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="max-w-md w-full glass rounded-[2rem] p-5 md:p-6 border border-white/10 shadow-2xl transform scale-95 transition-transform duration-300" id="interactive-list-box">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h3 id="interactive-list-title" class="text-lg md:text-xl font-bold text-white">Judul List</h3>
+                    <p id="interactive-list-subtitle" class="text-[9px] md:text-[10px] uppercase tracking-widest text-brand-500 opacity-80 mt-1">Subtitle</p>
+                </div>
+                <button onclick="hideInteractiveList()" class="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div id="interactive-list-content" class="space-y-2 max-h-[50vh] overflow-y-auto no-scrollbar pr-1">
+                <!-- Content Injected via JS -->
             </div>
         </div>
     </div>
 
-    <!-- Layar Proses Undian (Fullscreen) -->
-    <div id="draw-screen" class="fixed inset-0 bg-darker z-50 hidden flex-col items-center justify-center transition-opacity duration-500 opacity-0">
-        <!-- Radial glow effect (Normal = Gold, Hyper = Red) -->
+    <!-- ========================================== -->
+    <!-- LAYAR DRAWING SINEAMTIK (CENTERED PERFECTLY) -->
+    <!-- ========================================== -->
+    <div id="draw-screen" class="fixed inset-0 bg-dark-bg z-[100] hidden items-center justify-center transition-opacity duration-500 opacity-0 overflow-hidden">
         <div id="draw-bg-glow" class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(202,138,4,0.15)_0%,rgba(2,6,23,1)_70%)] transition-colors duration-1000"></div>
         
-        <p id="draw-subtitle" class="text-gold-500 tracking-[0.5em] text-sm md:text-lg uppercase mb-4 opacity-70 font-medium transition-colors">Mengacak Nama</p>
-        
-        <div class="h-32 flex items-center justify-center w-full px-4 relative overflow-hidden">
-            <div id="line-top" class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-gold-500/50 to-transparent transition-colors"></div>
-            <div id="line-bottom" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-gold-500/50 to-transparent transition-colors"></div>
-            
-            <h2 id="rolling-name" class="font-display text-6xl md:text-8xl text-white tracking-wider text-center drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
-                SIAP-SIAP
-            </h2>
-        </div>
-    </div>
+        <div class="relative z-10 w-full flex flex-col items-center justify-center">
+            <div class="relative w-full flex items-center justify-center py-8 md:py-16">
+                <!-- Subtitle -->
+                <p id="draw-subtitle" class="absolute -top-10 md:-top-14 left-0 right-0 text-brand-500 tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-lg uppercase opacity-70 font-medium transition-colors text-center px-4">
+                    Mengacak Tuan Rumah...
+                </p>
 
-    <!-- Layar Pemenang -->
-    <div id="winner-screen" class="fixed inset-0 bg-darker/95 backdrop-blur-md z-40 hidden flex-col items-center justify-center px-4 transition-opacity duration-500 opacity-0 overflow-y-auto py-10">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.2)_0%,rgba(2,6,23,1)_80%)] fixed pointer-events-none"></div>
-
-        <div class="text-center z-10 max-w-3xl w-full mt-10">
-            <p class="text-gold-400 tracking-[0.4em] text-lg uppercase mb-2 font-medium">Kandidat Tuan Rumah Terpilih</p>
-            
-            <div class="py-6">
-                <h2 id="winner-name" class="font-display text-6xl md:text-8xl text-cinematic reveal-winner break-words">
-                    NAMA PEMENANG
+                <div id="line-top" class="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent transition-colors"></div>
+                <div id="line-bottom" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent transition-colors"></div>
+                
+                <h2 id="rolling-name" class="font-display text-5xl sm:text-6xl md:text-8xl lg:text-[10rem] text-white tracking-widest text-center drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] leading-none px-4 w-full break-words">
+                    SIAP-SIAP
                 </h2>
             </div>
+        </div>
+    </div>
 
-            <!-- Panel Keputusan: Terima atau Keberatan -->
-            <div id="decision-container" class="mt-12 bg-slate-900/80 border border-slate-700 p-8 rounded-2xl shadow-2xl opacity-0 transition-opacity duration-1000 max-w-lg mx-auto backdrop-blur-sm text-center">
-                <h3 class="text-xl font-bold text-white mb-2">Apakah Tuan Rumah Bersedia?</h3>
-                <p class="text-slate-400 text-sm mb-8">Pilih opsi di bawah ini untuk melanjutkan.</p>
-                
-                <div class="flex flex-col gap-4">
-                    <button onclick="acceptHost()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-bold py-4 px-8 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all transform hover:-translate-y-1 text-lg flex items-center justify-center gap-2">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Ya, Bersedia (Lanjut)
-                    </button>
-                    
-                    <button onclick="rejectHost()" class="w-full bg-slate-800 border border-red-900/50 hover:bg-red-950 hover:border-red-500 text-red-400 font-bold py-4 px-8 rounded-xl transition-all text-lg flex items-center justify-center gap-2 group">
-                        <svg class="w-6 h-6 group-hover:animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                        Keberatan / Putar Ulang!
-                    </button>
-                </div>
+    <!-- HOST CONFIRMATION MODAL -->
+    <div id="modal-host" class="fixed inset-0 z-[110] bg-black/95 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-all duration-700 overflow-y-auto">
+        <div class="max-w-4xl w-full text-center flex flex-col items-center py-6">
+            <p class="text-brand-500 font-bold tracking-[0.4em] uppercase text-[10px] md:text-xs mb-2 opacity-80">Kandidat Tuan Rumah Terpilih</p>
+            <h2 id="host-name-text" class="text-cinematic font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tighter drop-shadow-2xl leading-none break-words px-2">Nama</h2>
+
+            <div id="host-controls" class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
+                <button onclick="confirmHost()" class="p-4 bg-brand-500 hover:bg-brand-600 text-white rounded-2xl font-bold text-sm md:text-base shadow-xl shadow-brand-500/30 transition-all hover:-translate-y-1">
+                    Bersedia (Buat Undangan)
+                </button>
+                <button onclick="rejectHost()" class="p-4 glass border-white/10 text-white rounded-2xl font-bold text-sm md:text-base hover:bg-red-900/40 hover:text-red-400 hover:border-red-900/50 transition-all group">
+                    Berhalangan / Putar Ulang
+                </button>
             </div>
 
-            <!-- Form Detail Acara (Awalnya Sembunyi) -->
-            <div id="event-form-container" class="mt-8 bg-slate-900/80 border border-slate-700 p-6 md:p-8 rounded-2xl shadow-2xl hidden opacity-0 transition-opacity duration-1000 max-w-2xl mx-auto text-left backdrop-blur-sm">
-                <h3 class="text-xl font-semibold text-white mb-6 border-b border-slate-700 pb-4">Lengkapi Detail Undangan</h3>
-                
-                <div class="space-y-5">
-                    <div>
-                        <label class="block text-slate-400 text-sm font-medium mb-2" for="pertemuan">Pertemuan Ke Berapa?</label>
-                        <input class="input-premium w-full rounded-xl py-3 px-4" id="pertemuan" type="number" placeholder="Contoh: 3" required>
-                    </div>
+            <!-- WA Form with Preview -->
+            <div id="wa-form" class="hidden w-full max-w-3xl glass p-5 md:p-8 rounded-[2rem] mt-4 text-left border-brand-500/20 shadow-2xl flex flex-col lg:flex-row gap-6">
+                <!-- Form Inputs -->
+                <div class="flex-1 space-y-4">
+                    <h4 class="text-sm md:text-base font-bold flex items-center gap-2 border-b border-white/10 pb-3">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        Detail Undangan
+                    </h4>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label class="block text-slate-400 text-sm font-medium mb-2" for="tanggal">Tanggal Pelaksanaan</label>
-                            <input class="input-premium w-full rounded-xl py-3 px-4" id="tanggal" type="date" required>
-                            <p class="text-xs text-slate-500 mt-2">*Hari otomatis mengikuti tanggal</p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Pertemuan Ke-</label>
+                            <input type="number" id="f-round" oninput="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm" placeholder="5">
                         </div>
-                        <div>
-                            <label class="block text-slate-400 text-sm font-medium mb-2" for="jam">Jam Pelaksanaan</label>
-                            <input class="input-premium w-full rounded-xl py-3 px-4" id="jam" type="time" required>
+                        <div class="space-y-1">
+                            <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Waktu (WIB)</label>
+                            <input type="time" id="f-time" oninput="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm">
                         </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Tanggal Acara</label>
+                        <input type="date" id="f-date" onchange="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Lokasi / Catatan Maps (Opsional)</label>
+                        <input type="text" id="f-loc" oninput="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm" placeholder="Cth: Rumah Bpk. Suri atau Link Maps">
                     </div>
                 </div>
 
-                <div class="mt-8 flex flex-col md:flex-row gap-4 justify-center items-center">
-                    <button onclick="generateWhatsAppMessage()" class="w-full md:w-auto bg-[#25D366] hover:bg-[#1fa951] text-white font-semibold py-4 px-8 rounded-xl shadow-[0_0_20px_rgba(37,211,102,0.3)] transition-all flex items-center justify-center gap-3 text-lg">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-                        Buat Undangan WA
-                    </button>
-                    <button onclick="closeWinnerScreen()" class="w-full md:w-auto bg-transparent border border-slate-600 hover:border-slate-400 text-white font-medium py-4 px-8 rounded-xl transition-colors text-lg">
-                        Batal & Tutup
-                    </button>
+                <!-- Preview Area -->
+                <div class="flex-1 flex flex-col space-y-3">
+                    <h4 class="text-sm md:text-base font-bold flex items-center gap-2 border-b border-white/10 pb-3 text-[#25D366]">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                        Pratinjau Pesan (Bisa Diedit)
+                    </h4>
+                    <textarea id="wa-preview-text" class="flex-1 w-full bg-[#111b21] border border-white/10 p-3 rounded-xl outline-none focus:border-[#25D366] text-xs text-white resize-none font-sans" rows="8"></textarea>
+                    
+                    <div class="flex gap-2 pt-2">
+                        <button onclick="sendInvite()" class="flex-1 p-3 bg-[#25D366] hover:bg-[#1fa951] text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg text-sm transition-all">
+                            Kirim ke WhatsApp
+                        </button>
+                        <button onclick="resetUI()" class="px-4 p-3 glass border-white/10 rounded-xl font-bold opacity-80 hover:bg-white/5 text-sm transition-all">Tutup</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Konfirmasi Pesan WA -->
-    <div id="wa-preview-modal" class="fixed inset-0 bg-black/90 z-50 hidden flex-col items-center justify-center p-4">
-        <div class="bg-slate-900 border border-gold-500/30 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
-            <h3 class="text-xl font-bold text-white mb-4 border-b border-slate-700 pb-2">Pratinjau Pesan WhatsApp</h3>
-            <textarea id="wa-message-preview" class="w-full h-72 bg-slate-800 text-slate-200 p-4 rounded-xl border border-slate-700 focus:outline-none focus:border-gold-500 resize-none text-sm leading-relaxed"></textarea>
+    <!-- MEMBER MANAGER MODAL (FULL EDITING & BACKUP) -->
+    <div id="modal-manager" class="fixed inset-0 z-[120] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="max-w-md w-full glass rounded-[2rem] p-5 border border-white/10 shadow-2xl transform scale-95 transition-transform duration-300" id="manager-box">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-lg font-bold">Pengaturan Data Keluarga</h3>
+                <button onclick="hideMemberManager()" class="text-white/50 hover:text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
             
-            <div class="mt-6 flex gap-4">
-                <button onclick="document.getElementById('wa-preview-modal').classList.add('hidden')" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl transition font-medium">Batal</button>
-                <button onclick="sendToWA()" class="flex-1 py-3 bg-[#25D366] hover:bg-[#1fa951] text-white rounded-xl transition font-medium font-bold shadow-lg flex justify-center items-center gap-2">
-                    Kirim <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                </button>
+            <div class="flex gap-2 mb-4 pb-4 border-b border-white/10">
+                <input type="text" id="new-member-name" class="flex-1 bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm" placeholder="Tambah Nama Baru...">
+                <button onclick="addMember()" class="px-4 bg-brand-500 text-white font-bold rounded-xl text-sm shadow-lg hover:bg-brand-600 transition-colors">Tambah</button>
+            </div>
+
+            <div class="space-y-2 max-h-[30vh] overflow-y-auto no-scrollbar mb-4" id="manage-list">
+                <!-- List for editing -->
+            </div>
+
+            <div class="flex gap-2 border-t border-white/10 pt-4">
+                <button onclick="exportData()" class="flex-1 p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-colors" title="Salin data ke clipboard">Backup Data</button>
+                <button onclick="importData()" class="flex-1 p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-colors" title="Masukkan data dari perangkat lain">Restore Data</button>
             </div>
         </div>
     </div>
 
     <script>
-        const defaultMembers = [
+        // --- DATA STATE ---
+        let members = [
             { id: 1, name: "Bpk. Suri", hasHosted: false }, { id: 2, name: "Bpk. Moch Soli", hasHosted: false },
             { id: 3, name: "Bpk. Likasih", hasHosted: false }, { id: 4, name: "Bpk. Misturah", hasHosted: false },
             { id: 5, name: "Bu Dwi", hasHosted: false }, { id: 6, name: "Bpk. Agus", hasHosted: false },
@@ -285,74 +314,153 @@
             { id: 13, name: "Bpk. Ardita", hasHosted: false }
         ];
 
-        let members = [];
-        let currentWinner = "";
-        let rejectedThisRound = []; // Menyimpan nama yang keberatan pada putaran ini agar tidak terpilih lagi saat diulang
+        let currentWinnerName = "";
+        let soundEnabled = true;
+        let rejectedThisRound = [];
+        let activeListType = 'ready'; 
 
-        function formatDateIndo(dateStr) {
-            if (!dateStr) return "";
-            const date = new Date(dateStr);
-            const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+        // --- AUDIO ENGINE ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playBeep(freq, dur, type = 'sine') {
+            if(!soundEnabled) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + dur);
+            } catch(e) {}
+        }
+        function playSuccessSound() {
+            if(!soundEnabled) return;
+            [523, 659, 783, 1046].forEach((f, i) => setTimeout(() => playBeep(f, 0.4, 'triangle'), i * 150));
         }
 
-        function getHariIndo(dateStr) {
-            if (!dateStr) return "";
-            const date = new Date(dateStr);
-            const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-            return days[date.getDay()];
-        }
-
-        function loadData() {
-            const saved = localStorage.getItem('arisanPremiumData_v3');
-            if (saved) members = JSON.parse(saved);
-            else members = JSON.parse(JSON.stringify(defaultMembers));
-            renderList();
-        }
-
-        function saveData() { localStorage.setItem('arisanPremiumData_v3', JSON.stringify(members)); }
-
-        function resetData() {
-            if(confirm("Hapus semua riwayat tuan rumah?")) {
-                members = JSON.parse(JSON.stringify(defaultMembers));
-                saveData(); renderList();
+        // --- FULLSCREEN LOGIC ---
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
             }
         }
 
-        function renderList() {
-            const listContainer = document.getElementById('members-list');
-            listContainer.innerHTML = '';
-            const eligibleCount = members.filter(m => !m.hasHosted).length;
-            document.getElementById('eligible-count').innerText = eligibleCount;
+        document.addEventListener('fullscreenchange', (event) => {
+            const icon = document.getElementById('fs-icon');
+            if (document.fullscreenElement) {
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`; // Close icon approx
+            } else {
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>`;
+            }
+        });
 
-            const sortedMembers = [...members].sort((a, b) => (a.hasHosted === b.hasHosted)? 0 : a.hasHosted ? 1 : -1);
-
-            sortedMembers.forEach(member => {
-                const item = document.createElement('label');
-                item.className = `flex items-center justify-between p-4 rounded-xl border transition-all cursor-pointer group ${member.hasHosted ? 'bg-slate-900/40 border-slate-800/50 opacity-50' : 'bg-slate-800/40 border-slate-700 hover:border-gold-500/50 hover:bg-slate-800'}`;
-                item.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <input type="checkbox" class="premium-checkbox" ${member.hasHosted ? 'checked' : ''} onchange="toggleStatus(${member.id})">
-                        <span class="font-medium text-lg ${member.hasHosted ? 'text-slate-500 line-through' : 'text-slate-200 group-hover:text-gold-100 transition-colors'}">${member.name}</span>
-                    </div>`;
-                listContainer.appendChild(item);
-            });
+        // --- CORE LOGIC ---
+        function init() {
+            const savedData = localStorage.getItem('arisan_v13_ultimate');
+            if(savedData) members = JSON.parse(savedData);
+            document.getElementById('f-date').valueAsDate = new Date();
+            updateDashboardStats();
         }
 
-        function toggleStatus(id) {
-            const index = members.findIndex(m => m.id === id);
-            if(index !== -1) { members[index].hasHosted = !members[index].hasHosted; saveData(); renderList(); }
+        function saveData() {
+            localStorage.setItem('arisan_v13_ultimate', JSON.stringify(members));
         }
 
+        function updateDashboardStats() {
+            const ready = members.filter(m => !m.hasHosted).length;
+            const done = members.filter(m => m.hasHosted).length;
+            
+            document.getElementById('count-ready').innerText = ready;
+            document.getElementById('count-done').innerText = done;
+            saveData();
+        }
+
+        // --- INTERACTIVE POPUP LIST ---
+        function showInteractiveList(type) {
+            activeListType = type;
+            const modal = document.getElementById('modal-interactive-list');
+            const box = document.getElementById('interactive-list-box');
+            const title = document.getElementById('interactive-list-title');
+            const subtitle = document.getElementById('interactive-list-subtitle');
+            
+            if(type === 'ready') {
+                title.innerText = "Daftar Tersedia";
+                subtitle.innerText = "Kandidat Tuan Rumah";
+            } else {
+                title.innerText = "Sudah Selesai";
+                subtitle.innerText = "Pernah Menjadi Tuan Rumah";
+            }
+
+            renderInteractiveListContent();
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                box.classList.remove('scale-95');
+                box.classList.add('scale-100');
+            }, 10);
+        }
+
+        function hideInteractiveList() {
+            const modal = document.getElementById('modal-interactive-list');
+            const box = document.getElementById('interactive-list-box');
+            
+            modal.style.opacity = '0';
+            box.classList.remove('scale-100');
+            box.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function renderInteractiveListContent() {
+            const container = document.getElementById('interactive-list-content');
+            const displayData = members.filter(m => activeListType === 'ready' ? !m.hasHosted : m.hasHosted);
+
+            if(displayData.length === 0) {
+                container.innerHTML = `<p class="text-xs opacity-40 text-center py-8 italic">Tidak ada daftar keluarga di kategori ini.</p>`;
+                return;
+            }
+
+            container.innerHTML = displayData.map(m => `
+                <div class="flex justify-between items-center p-3 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                    <span class="font-semibold text-sm text-white/90">${m.name}</span>
+                    <button onclick="toggleMemberStatus(${m.id})" class="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md transition-colors ${activeListType === 'ready' ? 'bg-brand-500/20 text-brand-400 hover:bg-brand-500 hover:text-white' : 'bg-white/10 text-white/50 hover:bg-white/20 hover:text-white'}">
+                        ${activeListType === 'ready' ? 'Tandai Selesai' : 'Kembalikan'}
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function toggleMemberStatus(id) {
+            const idx = members.findIndex(m => m.id === id);
+            members[idx].hasHosted = !members[idx].hasHosted;
+            updateDashboardStats();
+            renderInteractiveListContent(); 
+        }
+
+        // --- NEW PROFESSIONAL ROULETTE ENGINE ---
         function initiateDraw(isHyperMode = false) {
-            // Jika mulai undian baru dari awal, reset daftar yang menolak
+            if(audioCtx.state === 'suspended') audioCtx.resume();
             if(!isHyperMode) rejectedThisRound = [];
 
-            // Cari kandidat yang tersedia DAN tidak sedang keberatan di putaran ini
             const eligible = members.filter(m => !m.hasHosted && !rejectedThisRound.includes(m.name));
             
             if (eligible.length === 0) {
-                alert("Tidak ada kandidat lain yang tersisa! Harap reset data atau bujuk kandidat sebelumnya.");
+                alert("Semua anggota telah terpilih atau sedang dikecualikan! Harap kembalikan status anggota pada kotak 'Sudah Pernah'.");
                 return;
             }
 
@@ -361,8 +469,7 @@
             setTimeout(() => {
                 const rollingName = document.getElementById('rolling-name');
                 rollingName.classList.add('motion-blur');
-                // Hyper mode berdurasi 12 detik, Normal 7 detik
-                runRouletteEngine(eligible, isHyperMode ? 12000 : 7000, isHyperMode);
+                runProRouletteEngine(eligible, isHyperMode ? 9000 : 7000, isHyperMode);
             }, 500);
         }
 
@@ -378,53 +485,86 @@
             setTimeout(() => { dashboard.classList.add('hidden'); }, 500);
 
             drawScreen.classList.remove('hidden');
+            drawScreen.classList.add('flex');
             void drawScreen.offsetWidth;
             drawScreen.style.opacity = '1';
 
             if (isHyper) {
-                // Tampilan Ekstrem (Merah & Bergetar)
                 drawScreen.classList.add('hyper-shake');
-                bgGlow.className = 'absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.3)_0%,rgba(2,6,23,1)_70%)] transition-colors duration-500';
-                subtitle.innerText = "MENCARI KANDIDAT PENGGANTI...";
-                subtitle.className = "text-red-500 tracking-[0.5em] text-sm md:text-lg uppercase mb-4 opacity-90 font-bold transition-colors animate-pulse";
-                lineTop.className = "absolute top-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-red-500 to-transparent transition-colors";
-                lineBottom.className = "absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-red-500 to-transparent transition-colors";
+                bgGlow.className = 'absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.2)_0%,rgba(2,6,23,1)_70%)] transition-colors duration-500';
+                subtitle.innerText = "Mencari Kandidat Pengganti...";
+                subtitle.className = "absolute -top-10 md:-top-14 left-0 right-0 text-red-500 tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-lg uppercase opacity-90 font-bold transition-colors animate-pulse text-center px-4";
+                lineTop.className = "absolute top-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-red-500 to-transparent transition-colors";
+                lineBottom.className = "absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-red-500 to-transparent transition-colors";
                 document.getElementById('rolling-name').classList.add('text-hyper');
+                document.getElementById('rolling-name').classList.remove('text-white');
             } else {
-                // Tampilan Normal (Emas)
                 drawScreen.classList.remove('hyper-shake');
                 bgGlow.className = 'absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(202,138,4,0.15)_0%,rgba(2,6,23,1)_70%)] transition-colors duration-1000';
-                subtitle.innerText = "Mengacak Nama";
-                subtitle.className = "text-gold-500 tracking-[0.5em] text-sm md:text-lg uppercase mb-4 opacity-70 font-medium transition-colors";
-                lineTop.className = "absolute top-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-gold-500/50 to-transparent transition-colors";
-                lineBottom.className = "absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-px bg-gradient-to-r from-transparent via-gold-500/50 to-transparent transition-colors";
+                subtitle.innerText = "Mengacak Tuan Rumah...";
+                subtitle.className = "absolute -top-10 md:-top-14 left-0 right-0 text-brand-500 tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-lg uppercase opacity-70 font-medium transition-colors text-center px-4";
+                lineTop.className = "absolute top-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent transition-colors";
+                lineBottom.className = "absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent transition-colors";
                 document.getElementById('rolling-name').classList.remove('text-hyper');
+                document.getElementById('rolling-name').classList.add('text-white');
             }
         }
 
-        function runRouletteEngine(eligibleNames, totalDuration, isHyper) {
+        function runProRouletteEngine(eligibleNames, totalDuration, isHyper) {
             const rollingName = document.getElementById('rolling-name');
+            const winnerIndex = Math.floor(Math.random() * eligibleNames.length);
+            const winner = eligibleNames[winnerIndex];
+
+            const trackLength = isHyper ? 90 : 70;
+            const displaySequence = [];
+            let lastAdded = "";
+
+            for (let i = 0; i < trackLength - 1; i++) {
+                let nextName;
+                do {
+                    nextName = eligibleNames[Math.floor(Math.random() * eligibleNames.length)].name;
+                } while (nextName === lastAdded && eligibleNames.length > 1);
+                displaySequence.push(nextName);
+                lastAdded = nextName;
+            }
+
+            if (eligibleNames.length > 1) {
+                let teaseName;
+                do {
+                    teaseName = eligibleNames[Math.floor(Math.random() * eligibleNames.length)].name;
+                } while (teaseName === winner.name);
+                displaySequence[displaySequence.length - 1] = teaseName;
+            }
+
+            displaySequence.push(winner.name);
+
             const startTime = performance.now();
-            let lastUpdate = startTime;
-            let currentDelay = 40;
+            let lastIndexRendered = -1;
+
+            function easeOutQuint(x) { return 1 - Math.pow(1 - x, 5); }
 
             function update(currentTime) {
                 const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / totalDuration, 1);
+                const timeProgress = Math.min(elapsed / totalDuration, 1);
+                const easeProgress = easeOutQuint(timeProgress);
+                const currentIndex = Math.floor(easeProgress * (displaySequence.length - 1));
 
-                if (currentTime - lastUpdate >= currentDelay) {
-                    const randomPick = eligibleNames[Math.floor(Math.random() * eligibleNames.length)];
-                    rollingName.innerText = randomPick.name;
-                    lastUpdate = currentTime;
+                if (currentIndex !== lastIndexRendered) {
+                    rollingName.innerText = displaySequence[currentIndex];
+                    lastIndexRendered = currentIndex;
                     
-                    // Jika hyper mode, pelambatan lebih dramatis di akhir (pangkat 5)
-                    const easingPower = isHyper ? 5 : 4;
-                    currentDelay = 40 + (Math.pow(progress, easingPower) * 700);
+                    const pitch = 800 - (easeProgress * 600); 
+                    playBeep(pitch, 0.05, 'square');
+                    
+                    rollingName.style.transform = `scale(${1.02 + (0.05 * Math.random())})`;
+                    setTimeout(() => { rollingName.style.transform = 'scale(1)'; }, 50);
                 }
 
-                if (progress < 1) {
+                if (timeProgress < 1) {
                     requestAnimationFrame(update);
                 } else {
+                    currentWinnerName = winner.name;
+                    rollingName.innerText = currentWinnerName; 
                     finishDraw(isHyper);
                 }
             }
@@ -432,160 +572,225 @@
         }
 
         function finishDraw(wasHyper) {
-            currentWinner = document.getElementById('rolling-name').innerText;
-            
-            // Tandai sebagai terpilih (sementara) di sistem
-            const winnerIndex = members.findIndex(m => m.name === currentWinner);
-            if(winnerIndex !== -1) {
-                members[winnerIndex].hasHosted = true;
-                saveData();
-                renderList(); // Update sidebar list
-            }
-
             const drawScreen = document.getElementById('draw-screen');
             const rollingName = document.getElementById('rolling-name');
-            const winnerScreen = document.getElementById('winner-screen');
-            const winnerNameDisplay = document.getElementById('winner-name');
-            const decisionContainer = document.getElementById('decision-container');
+            const modalHost = document.getElementById('modal-host');
+            const hostNameText = document.getElementById('host-name-text');
 
             rollingName.classList.remove('motion-blur');
-            drawScreen.classList.remove('hyper-shake'); // Hentikan getaran ekstrem
+            drawScreen.classList.remove('hyper-shake');
             
             setTimeout(() => {
                 drawScreen.style.opacity = '0';
                 setTimeout(() => {
                     drawScreen.classList.add('hidden');
+                    drawScreen.classList.remove('flex');
                     
-                    winnerNameDisplay.innerText = currentWinner;
-                    if(wasHyper) winnerNameDisplay.classList.add('text-hyper');
-                    else winnerNameDisplay.classList.remove('text-hyper');
+                    hostNameText.innerText = currentWinnerName;
+                    if(wasHyper) {
+                        hostNameText.classList.add('text-hyper');
+                        hostNameText.classList.remove('text-cinematic');
+                    } else {
+                        hostNameText.classList.add('text-cinematic');
+                        hostNameText.classList.remove('text-hyper');
+                    }
 
-                    winnerScreen.classList.remove('hidden');
-                    winnerScreen.classList.add('flex');
-                    void winnerScreen.offsetWidth;
-                    winnerScreen.style.opacity = '1';
+                    modalHost.classList.remove('hidden');
+                    modalHost.classList.add('flex');
+                    void modalHost.offsetWidth;
+                    modalHost.style.opacity = '1';
                     
-                    firePremiumConfetti();
-
-                    // Tampilkan kotak keputusan setelah 2 detik
-                    setTimeout(() => { decisionContainer.classList.remove('opacity-0'); }, 2000);
-                    
+                    playSuccessSound();
+                    celebrate();
                 }, 500);
             }, 1000);
         }
 
-        // FUNGSI JIKA TUAN RUMAH BERSEDIA
-        function acceptHost() {
-            const decisionContainer = document.getElementById('decision-container');
-            const formContainer = document.getElementById('event-form-container');
+        function confirmHost() {
+            const idx = members.findIndex(m => m.name === currentWinnerName);
+            if(idx !== -1) members[idx].hasHosted = true;
             
-            decisionContainer.classList.add('opacity-0');
-            setTimeout(() => {
-                decisionContainer.classList.add('hidden');
-                formContainer.classList.remove('hidden');
-                void formContainer.offsetWidth;
-                formContainer.classList.remove('opacity-0');
-            }, 500);
+            document.getElementById('host-controls').classList.add('hidden');
+            document.getElementById('wa-form').classList.remove('hidden');
+            updateDashboardStats();
+            generateWAPreview(); // Initial generation
         }
 
-        // FUNGSI JIKA TUAN RUMAH KEBERATAN
         function rejectHost() {
-            if(!confirm(`Yakin Bapak/Ibu ${currentWinner} berhalangan/keberatan? Nama ini akan diganti secara acak dengan kandidat lain.`)) return;
-
-            // Batalkan status tuan rumahnya
-            const winnerIndex = members.findIndex(m => m.name === currentWinner);
-            if(winnerIndex !== -1) {
-                members[winnerIndex].hasHosted = false;
-                saveData();
-            }
-            
-            // Masukkan ke daftar pengecualian putaran ini
-            rejectedThisRound.push(currentWinner);
-
-            // Transisi UI tutup layar pemenang dan mulai Hyper Draw
-            const winnerScreen = document.getElementById('winner-screen');
-            winnerScreen.style.opacity = '0';
-            
+            rejectedThisRound.push(currentWinnerName);
+            const modal = document.getElementById('modal-host');
+            modal.style.opacity = "0";
             setTimeout(() => {
-                winnerScreen.classList.add('hidden');
-                winnerScreen.classList.remove('flex');
-                
-                // Reset UI Keputusan untuk pemenang berikutnya
-                document.getElementById('decision-container').classList.remove('hidden', 'opacity-0');
-                document.getElementById('event-form-container').classList.add('hidden', 'opacity-0');
-                
-                // Mulaikan Hyper Draw
-                initiateDraw(true);
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.getElementById('host-controls').classList.remove('hidden');
+                document.getElementById('wa-form').classList.add('hidden');
+                initiateDraw(true); 
             }, 500);
         }
 
-        function firePremiumConfetti() {
-            const duration = 7000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
-            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-                const particleCount = 50 * (timeLeft / duration);
-                const colors = ['#fde047', '#eab308', '#ffffff', '#94a3b8'];
-                confetti(Object.assign({}, defaults, { particleCount, colors: colors, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-                confetti(Object.assign({}, defaults, { particleCount, colors: colors, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
-
-        function generateWhatsAppMessage() {
-            const pertemuan = document.getElementById('pertemuan').value;
-            const tanggalInput = document.getElementById('tanggal').value;
-            const jam = document.getElementById('jam').value;
-
-            if(!pertemuan || !tanggalInput || !jam) {
-                alert("Mohon lengkapi semua kolom!"); return;
-            }
-
-            const hariOtomatis = getHariIndo(tanggalInput);
-            const tanggalFormat = formatDateIndo(tanggalInput);
-
-            const pesan = `Assalamualaikum Warahmatullahi Wabarakatuh..\n\nKepada seluruh keluarga besar BANI SUBANDI yang saya hormati,\nDiberitahukan bahwa pertemuan silaturahmi rutin keluarga kita yang ke-${pertemuan} insyaallah akan dilaksanakan pada:\n\n*HARI:* ${hariOtomatis}\n*TANGGAL:* ${tanggalFormat}\n*WAKTU:* ${jam} WIB - Selesai\n*TEMPAT:* Kediaman ${currentWinner} (Sebagai Tuan Rumah/Sohibul Bait)\n\nBesar harapan kami agar seluruh anggota keluarga dapat meluangkan waktu dan hadir tepat waktu pada acara tersebut.\n\nSemoga langkah perjalanan saudara sekalian menuju kediaman sohibul bait dicatat sebagai nilai ibadah dan senantiasa mendapatkan rida dari Allah Subhanahu Wa Ta'ala.\n\nDemikian undangan ini kami sampaikan. Jazakumullah khairan katsiran.\n\nWassalamualaikum Warahmatullahi Wabarakatuh.`;
-
-            document.getElementById('wa-message-preview').value = pesan;
-            document.getElementById('wa-preview-modal').classList.remove('hidden');
-            document.getElementById('wa-preview-modal').classList.add('flex');
-        }
-
-        function sendToWA() {
-            const finalMessage = document.getElementById('wa-message-preview').value;
-            const url = `https://wa.me/?text=${encodeURIComponent(finalMessage)}`;
-            window.open(url, '_blank');
-        }
-
-        function closeWinnerScreen() {
-            const winnerScreen = document.getElementById('winner-screen');
+        function resetUI() {
+            const modal = document.getElementById('modal-host');
             const dashboard = document.getElementById('dashboard');
-            
-            winnerScreen.style.opacity = '0';
+
+            modal.style.opacity = "0";
             setTimeout(() => {
-                winnerScreen.classList.add('hidden');
-                winnerScreen.classList.remove('flex');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.getElementById('host-controls').classList.remove('hidden');
+                document.getElementById('wa-form').classList.add('hidden');
+                rejectedThisRound = [];
                 
-                // Reset UI Forms
-                document.getElementById('decision-container').classList.remove('hidden');
-                document.getElementById('decision-container').classList.add('opacity-0');
-                document.getElementById('event-form-container').classList.add('hidden', 'opacity-0');
-                
-                document.getElementById('pertemuan').value = '';
-                document.getElementById('tanggal').value = '';
-                document.getElementById('jam').value = '';
-                
-                renderList();
                 dashboard.classList.remove('hidden');
                 void dashboard.offsetWidth;
                 dashboard.style.opacity = '1';
             }, 500);
         }
 
-        loadData();
+        // --- UTILS ---
+        function celebrate() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const colors = ['#facc15', '#ffffff', '#ca8a04'];
+            (function frame() {
+                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors, zIndex: 1000 });
+                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors, zIndex: 1000 });
+                if (Date.now() < animationEnd) requestAnimationFrame(frame);
+            }());
+        }
+
+        function toggleTheme() { document.documentElement.classList.toggle('light'); }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-icon-path').setAttribute('d', soundEnabled 
+                ? "M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" 
+                : "M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2");
+        }
+
+        // --- MEMBER MANAGER (FULL EDITING MODAL) ---
+        function showMemberManager() {
+            const list = document.getElementById('manage-list');
+            list.innerHTML = members.map(m => `
+                <div class="flex items-center gap-2 p-2 glass border border-white/5 rounded-xl hover:bg-white/5 transition-colors">
+                    <button onclick="toggleMemberManager(${m.id})" class="p-2 rounded-lg transition-colors flex-shrink-0 border ${m.hasHosted ? 'bg-brand-500 border-brand-500 text-white' : 'bg-transparent border-white/20 text-transparent hover:border-brand-500'}" title="Tandai Sudah Pernah">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                    </button>
+                    <input type="text" value="${m.name}" onchange="updateMemberName(${m.id}, this.value)" class="flex-1 bg-transparent outline-none text-sm font-bold pl-1 ${m.hasHosted ? 'opacity-40 line-through' : ''}">
+                    <button onclick="removeMember(${m.id})" class="text-red-500 p-2 hover:bg-red-500/10 rounded-lg transition-colors" title="Hapus">✕</button>
+                </div>
+            `).join('');
+            
+            const modal = document.getElementById('modal-manager');
+            const box = document.getElementById('manager-box');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                box.classList.remove('scale-95');
+                box.classList.add('scale-100');
+            }, 10);
+        }
+
+        function toggleMemberManager(id) {
+            const idx = members.findIndex(m => m.id === id);
+            members[idx].hasHosted = !members[idx].hasHosted;
+            updateDashboardStats();
+            showMemberManager(); 
+        }
+
+        function hideMemberManager() { 
+            const modal = document.getElementById('modal-manager');
+            const box = document.getElementById('manager-box');
+            
+            modal.style.opacity = '0';
+            box.classList.remove('scale-100');
+            box.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function addMember() {
+            const name = document.getElementById('new-member-name').value;
+            if(!name) return;
+            members.push({ id: Date.now(), name, hasHosted: false });
+            document.getElementById('new-member-name').value = "";
+            updateDashboardStats();
+            showMemberManager();
+        }
+
+        function removeMember(id) {
+            members = members.filter(m => m.id !== id);
+            updateDashboardStats();
+            showMemberManager();
+        }
+
+        function updateMemberName(id, val) {
+            const idx = members.findIndex(m => m.id === id);
+            members[idx].name = val;
+            saveData();
+        }
+
+        // --- BACKUP & RESTORE ---
+        function exportData() {
+            const dataStr = JSON.stringify(members);
+            navigator.clipboard.writeText(dataStr).then(() => {
+                alert("Data berhasil disalin! Kirim teks ini ke HP lain jika ingin memindahkan data.");
+            }).catch(err => {
+                alert("Gagal menyalin: " + err);
+            });
+        }
+
+        function importData() {
+            const input = prompt("Paste (Tempel) kode backup data Anda di sini:");
+            if(input) {
+                try {
+                    const parsed = JSON.parse(input);
+                    if(Array.isArray(parsed) && parsed.length > 0 && parsed[0].hasOwnProperty('name')) {
+                        members = parsed;
+                        updateDashboardStats();
+                        showMemberManager();
+                        alert("Data berhasil dikembalikan!");
+                    } else {
+                        alert("Format data tidak sesuai.");
+                    }
+                } catch(e) {
+                    alert("Gagal membaca kode data yang dimasukkan.");
+                }
+            }
+        }
+
+        // --- WA INVITE WITH PREVIEW ---
+        function generateWAPreview() {
+            const round = document.getElementById('f-round').value || "[Ke-...]";
+            const time = document.getElementById('f-time').value || "[... WIB]";
+            const dateVal = document.getElementById('f-date').value;
+            const loc = document.getElementById('f-loc').value || "Sesuai kesepakatan keluarga";
+            
+            let dateStr = "[Hari, Tanggal]";
+            if(dateVal) {
+                const d = new Date(dateVal);
+                const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+                const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                dateStr = `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+            }
+
+            const msg = `*UNDANGAN SILATURAHMI BANI SUBANDI*\n\nAssalamualaikum Wr. Wb.\n\nAlhamdulillah, hasil penentuan sistem arisan menetapkan tuan rumah untuk pertemuan silaturahmi kita selanjutnya:\n\n🏠 *SOHIBUL BAIT:* ${currentWinnerName}\n🔢 *PERTEMUAN KE:* ${round}\n📅 *HARI/TGL:* ${dateStr}\n⏰ *WAKTU:* ${time} - Selesai\n📍 *LOKASI/CATATAN:* ${loc}\n\nBesar harapan kami agar seluruh anggota keluarga dapat meluangkan waktu untuk hadir demi menjaga dan mempererat tali silaturahmi.\n\nWassalamualaikum Wr. Wb.`;
+            
+            document.getElementById('wa-preview-text').value = msg;
+        }
+
+        function sendInvite() {
+            const finalMessage = document.getElementById('wa-preview-text').value;
+            if(!finalMessage) return;
+            window.open(`https://wa.me/?text=${encodeURIComponent(finalMessage)}`, '_blank');
+        }
+
+        init();
     </script>
 </body>
 </html>
