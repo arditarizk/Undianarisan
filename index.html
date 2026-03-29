@@ -6,7 +6,7 @@
     <title>Penentuan Tuan Rumah Arisan Bani Subandi</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Oswald:wght@500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script>
@@ -95,12 +95,9 @@
         </div>
         
         <div class="flex gap-2">
-            <!-- Fullscreen Toggle -->
             <button onclick="toggleFullscreen()" class="p-2.5 glass rounded-xl hover:bg-white/10 transition-colors" title="Layar Penuh">
                 <svg id="fs-icon" class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
             </button>
-            
-            <!-- Kelola Data Button -->
             <button onclick="showMemberManager()" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-colors text-xs font-bold uppercase tracking-widest">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
                 Kelola Data
@@ -108,13 +105,10 @@
             <button onclick="showMemberManager()" class="sm:hidden p-2.5 glass rounded-xl hover:bg-white/10 transition-colors" title="Kelola Data">
                 <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
             </button>
-
-            <!-- Theme Toggle -->
             <button onclick="toggleTheme()" class="p-2.5 glass rounded-xl hover:bg-white/10 transition-colors" title="Ubah Tema">
                 <svg id="sun-icon" class="w-4 h-4 text-brand-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" stroke-width="2"></path></svg>
                 <svg id="moon-icon" class="w-4 h-4 text-slate-700 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-width="2"></path></svg>
             </button>
-            <!-- Sound Toggle -->
             <button onclick="toggleSound()" id="sound-toggle" class="p-2.5 glass rounded-xl hover:bg-white/10 transition-colors" title="Suara">
                 <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path id="sound-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
             </button>
@@ -123,8 +117,6 @@
 
     <!-- Main Centered Content -->
     <main id="dashboard" class="relative z-10 flex-1 flex flex-col items-center justify-center w-full px-4 transition-opacity duration-500">
-        
-        <!-- Header Text -->
         <div class="text-center mb-6 md:mb-10">
             <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight drop-shadow-lg">
                 PENENTUAN <br> <span class="text-brand-400">TUAN RUMAH</span>
@@ -132,30 +124,24 @@
             <p class="mt-2 md:mt-3 opacity-60 uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold">Siapakah Sohibul Bait Selanjutnya?</p>
         </div>
 
-        <!-- THE BIG BUTTON -->
         <div class="relative group mb-8 md:mb-12">
             <div class="absolute -inset-6 bg-brand-500/20 rounded-full blur-[50px] group-hover:bg-brand-500/40 transition-all duration-700 pointer-events-none"></div>
-            
             <button onclick="initiateDraw(false)" class="relative z-10 w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 btn-gold rounded-full shadow-[0_20px_50px_rgba(234,179,8,0.3)] hover:scale-105 active:scale-95 transition-all flex flex-col items-center justify-center overflow-hidden border-8 border-white/20">
                 <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-all"></div>
-                
                 <div class="mb-2 md:mb-3 bg-white/10 p-3 md:p-4 rounded-3xl backdrop-blur-md group-hover:scale-110 transition-transform duration-500">
                     <svg class="w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 </div>
-                
                 <span class="text-white font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-[0.2em] drop-shadow-lg">ACAK</span>
                 <span class="text-white/80 text-[8px] md:text-[9px] lg:text-[11px] font-black uppercase tracking-[0.4em] mt-1">Sistem Arisan</span>
             </button>
         </div>
 
-        <!-- INTERACTIVE STATS BOXES -->
         <div class="flex gap-4 md:gap-8 max-w-lg w-full justify-center px-2">
             <button onclick="showInteractiveList('ready')" class="flex-1 glass p-3 md:p-4 rounded-[1.5rem] border border-white/10 hover:border-brand-500/50 hover:bg-white/5 transition-all group relative overflow-hidden text-center cursor-pointer shadow-lg hover:shadow-brand-500/20">
                 <div class="absolute inset-0 bg-brand-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <p class="text-3xl md:text-5xl font-display font-bold text-white mb-1 drop-shadow" id="count-ready">0</p>
                 <p class="text-[9px] md:text-xs font-black uppercase tracking-widest opacity-60 group-hover:text-brand-400 group-hover:opacity-100 transition-colors">Tersedia</p>
             </button>
-            
             <button onclick="showInteractiveList('done')" class="flex-1 glass p-3 md:p-4 rounded-[1.5rem] border border-white/10 hover:border-white/30 hover:bg-white/5 transition-all group relative overflow-hidden text-center cursor-pointer shadow-lg">
                 <div class="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <p class="text-3xl md:text-5xl font-display font-bold text-white mb-1 opacity-70 drop-shadow" id="count-done">0</p>
@@ -164,16 +150,13 @@
         </div>
     </main>
 
-    <!-- FOOTER CREDIT -->
     <footer class="relative z-10 w-full text-center pb-6">
         <p class="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase opacity-40 hover:opacity-100 transition-opacity">
             Dirancang oleh <span class="text-brand-500">Ardita Rizki Fauzi</span>
         </p>
     </footer>
 
-    <!-- ========================================== -->
     <!-- POPUP INTERAKTIF: DAFTAR NAMA -->
-    <!-- ========================================== -->
     <div id="modal-interactive-list" class="fixed inset-0 z-[115] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="max-w-md w-full glass rounded-[2rem] p-5 md:p-6 border border-white/10 shadow-2xl transform scale-95 transition-transform duration-300" id="interactive-list-box">
             <div class="flex justify-between items-center mb-6">
@@ -185,25 +168,18 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-            
-            <div id="interactive-list-content" class="space-y-2 max-h-[50vh] overflow-y-auto no-scrollbar pr-1">
-                <!-- Content Injected via JS -->
-            </div>
+            <div id="interactive-list-content" class="space-y-2 max-h-[50vh] overflow-y-auto no-scrollbar pr-1"></div>
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- LAYAR DRAWING SINEAMTIK (CENTERED PERFECTLY) -->
-    <!-- ========================================== -->
+    <!-- LAYAR DRAWING SINEAMTIK -->
     <div id="draw-screen" class="fixed inset-0 bg-dark-bg z-[100] hidden items-center justify-center transition-opacity duration-500 opacity-0 overflow-hidden">
         <div id="draw-bg-glow" class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(202,138,4,0.15)_0%,rgba(2,6,23,1)_70%)] transition-colors duration-1000"></div>
-        
         <div class="relative z-10 w-full flex flex-col items-center justify-center">
             <div class="relative w-full flex items-center justify-center py-8 md:py-16">
                 <p id="draw-subtitle" class="absolute -top-10 md:-top-14 left-0 right-0 text-brand-500 tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-lg uppercase opacity-70 font-medium transition-colors text-center px-4">
                     Mengacak Tuan Rumah...
                 </p>
-
                 <div id="line-top" class="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent transition-colors"></div>
                 <div id="line-bottom" class="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent transition-colors"></div>
                 
@@ -216,21 +192,24 @@
 
     <!-- HOST CONFIRMATION MODAL -->
     <div id="modal-host" class="fixed inset-0 z-[110] bg-black/95 backdrop-blur-md hidden items-center justify-center p-4 opacity-0 transition-all duration-700 overflow-y-auto">
-        <div class="max-w-4xl w-full text-center flex flex-col items-center py-6">
-            <p class="text-brand-500 font-bold tracking-[0.4em] uppercase text-[10px] md:text-xs mb-2 opacity-80">Kandidat Tuan Rumah Terpilih</p>
-            <h2 id="host-name-text" class="text-cinematic font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tighter drop-shadow-2xl leading-none break-words px-2">Nama</h2>
+        <div class="max-w-5xl w-full text-center flex flex-col items-center py-6 relative z-[115]">
+            <p class="text-brand-500 font-bold tracking-[0.4em] uppercase text-xs md:text-sm mb-3 opacity-90">Sohibul Bait Terpilih</p>
+            
+            <!-- UKURAN NAMA DIPERBESAR EKSTREM & LEBIH DOMINAN -->
+            <h2 id="host-name-text" class="text-cinematic font-display text-6xl sm:text-7xl md:text-8xl lg:text-[8rem] font-black mb-12 tracking-tighter drop-shadow-2xl leading-none break-words px-4 w-full">Nama</h2>
 
+            <!-- Tombol dibuat lebih kecil/proporsional agar tidak menyaingi kebesaran teks nama -->
             <div id="host-controls" class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
-                <button onclick="confirmHost()" class="p-4 md:p-5 bg-brand-500 hover:bg-brand-600 text-white rounded-2xl font-bold text-sm md:text-base shadow-xl shadow-brand-500/30 transition-all hover:-translate-y-1">
+                <button onclick="confirmHost()" class="py-3 px-4 md:py-4 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-bold text-sm md:text-base shadow-xl shadow-brand-500/30 transition-all hover:-translate-y-1">
                     Bersedia (Buat Undangan)
                 </button>
-                <button onclick="rejectHost()" class="p-4 md:p-5 glass border-white/10 text-white rounded-2xl font-bold text-sm md:text-base hover:bg-red-900/40 hover:text-red-400 hover:border-red-900/50 transition-all group">
+                <button onclick="rejectHost()" class="py-3 px-4 md:py-4 glass border-white/10 text-white rounded-xl font-bold text-sm md:text-base hover:bg-red-900/40 hover:text-red-400 hover:border-red-900/50 transition-all group">
                     Berhalangan / Putar Ulang
                 </button>
             </div>
 
             <!-- WA Form with Preview -->
-            <div id="wa-form" class="hidden w-full max-w-3xl glass p-5 md:p-8 rounded-[2rem] mt-4 text-left border-brand-500/20 shadow-2xl flex flex-col lg:flex-row gap-6">
+            <div id="wa-form" class="hidden w-full max-w-4xl glass p-5 md:p-8 rounded-[2rem] mt-6 text-left border-brand-500/20 shadow-2xl flex flex-col lg:flex-row gap-6">
                 <!-- Form Inputs -->
                 <div class="flex-1 space-y-4">
                     <h4 class="text-sm md:text-base font-bold flex items-center gap-2 border-b border-white/10 pb-3">
@@ -239,11 +218,9 @@
                     </h4>
                     
                     <div class="grid grid-cols-2 gap-3">
-                        <!-- DROPDOWN PERTEMUAN -->
                         <div class="space-y-1 relative">
                             <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Pertemuan Ke-</label>
                             <select id="f-round" onchange="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm text-white appearance-none cursor-pointer transition-colors">
-                                <!-- Diisi otomatis -->
                             </select>
                             <div class="absolute right-3 top-8 pointer-events-none opacity-50">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -259,33 +236,30 @@
                         <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Tanggal Acara</label>
                         <input type="date" id="f-date" onchange="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm">
                     </div>
-                    <div class="space-y-1">
-                        <label class="text-[9px] font-black opacity-50 uppercase tracking-widest">Lokasi / Catatan (Opsional)</label>
-                        <input type="text" id="f-loc" oninput="generateWAPreview()" class="w-full bg-black/20 border border-white/10 p-3 rounded-xl outline-none focus:border-brand-500 text-sm" placeholder="Cth: Rumah Bpk. Suri / Link Maps">
-                    </div>
                 </div>
 
                 <!-- Preview Area -->
-                <div class="flex-1 flex flex-col space-y-3">
+                <div class="flex-[1.2] flex flex-col space-y-3">
                     <h4 class="text-sm md:text-base font-bold flex items-center gap-2 border-b border-white/10 pb-3 text-[#25D366]">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
                         Pratinjau Pesan (Bisa Diedit)
                     </h4>
-                    <textarea id="wa-preview-text" class="flex-1 w-full bg-[#111b21] border border-white/10 p-3 rounded-xl outline-none focus:border-[#25D366] text-xs text-white resize-none font-sans" rows="8"></textarea>
+                    <textarea id="wa-preview-text" class="flex-1 w-full bg-[#111b21] border border-white/10 p-4 rounded-xl outline-none focus:border-[#25D366] text-xs md:text-sm text-white resize-none font-sans leading-relaxed" rows="12"></textarea>
                     
                     <div class="flex gap-2 pt-2">
-                        <button onclick="sendInvite()" class="flex-1 p-3 bg-[#25D366] hover:bg-[#1fa951] text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg text-sm transition-all">
+                        <button onclick="sendInvite()" class="flex-1 p-3 md:p-4 bg-[#25D366] hover:bg-[#1fa951] text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg text-sm md:text-base transition-all">
                             Kirim ke WhatsApp
                         </button>
-                        <button onclick="resetUI()" class="px-4 p-3 glass border-white/10 rounded-xl font-bold opacity-80 hover:bg-white/5 text-sm transition-all">Tutup</button>
+                        <button onclick="resetUI()" class="px-4 p-3 md:p-4 glass border-white/10 rounded-xl font-bold opacity-80 hover:bg-white/5 text-sm transition-all">Tutup</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- MEMBER MANAGER MODAL (FULL EDITING & BACKUP) -->
+
+    <!-- MEMBER MANAGER MODAL -->
     <div id="modal-manager" class="fixed inset-0 z-[120] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-        <div class="max-w-md w-full glass rounded-[2rem] p-5 border border-white/10 shadow-2xl transform scale-95 transition-transform duration-300" id="manager-box">
+        <div class="max-w-md w-full glass rounded-[2rem] p-5 md:p-6 border border-white/10 shadow-2xl transform scale-95 transition-transform duration-300" id="manager-box">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="text-lg font-bold">Pengaturan Data Keluarga</h3>
                 <button onclick="hideMemberManager()" class="text-white/50 hover:text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
@@ -296,9 +270,7 @@
                 <button onclick="addMember()" class="px-4 bg-brand-500 text-white font-bold rounded-xl text-sm shadow-lg hover:bg-brand-600 transition-colors">Tambah</button>
             </div>
 
-            <div class="space-y-2 max-h-[30vh] overflow-y-auto no-scrollbar mb-4" id="manage-list">
-                <!-- List for editing -->
-            </div>
+            <div class="space-y-2 max-h-[30vh] overflow-y-auto no-scrollbar mb-4" id="manage-list"></div>
 
             <div class="flex gap-2 border-t border-white/10 pt-4">
                 <button onclick="exportData()" class="flex-1 p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-colors" title="Salin data ke clipboard">Backup Data</button>
@@ -308,11 +280,11 @@
     </div>
 
     <script>
-        // --- DATA STATE (UPDATED DENGAN 14 ANGGOTA) ---
+        // --- DATA STATE ---
         let members = [
             { id: 1, name: "Bpk. Suri", hasHosted: false }, 
             { id: 2, name: "Bpk. Moch Soli", hasHosted: false },
-            { id: 3, name: "Bu Lik Asih", hasHosted: false }, // Updated
+            { id: 3, name: "Bu Lik Asih", hasHosted: false },
             { id: 4, name: "Bpk. Misturah", hasHosted: false },
             { id: 5, name: "Bu Dwi", hasHosted: false }, 
             { id: 6, name: "Bpk. Agus", hasHosted: false },
@@ -323,7 +295,7 @@
             { id: 11, name: "Bpk. Gita Rizki", hasHosted: false }, 
             { id: 12, name: "Bpk. Widad", hasHosted: false },
             { id: 13, name: "Bpk. Ardita", hasHosted: false },
-            { id: 14, name: "Bpk. Fahmi Rizki", hasHosted: false } // New Member
+            { id: 14, name: "Bpk. Fahmi Rizki", hasHosted: false }
         ];
 
         let currentWinnerName = "";
@@ -375,17 +347,13 @@
             }
         });
 
-        // --- CORE LOGIC WITH AUTO MIGRATION ---
+        // --- CORE LOGIC ---
         function init() {
-            const savedData = localStorage.getItem('arisan_v17_perfect_suspense');
+            const savedData = localStorage.getItem('arisan_v19_final');
             if(savedData) {
                 let parsed = JSON.parse(savedData);
-                
-                // MIGRATION: Update "Bpk. Likasih" to "Bu Lik Asih" preserving status
                 const idx3 = parsed.findIndex(m => m.id === 3);
                 if(idx3 !== -1) parsed[idx3].name = "Bu Lik Asih";
-                
-                // MIGRATION: Ensure 14th member exists without overwriting current data
                 if(!parsed.some(m => m.id === 14)) {
                     parsed.push({ id: 14, name: "Bpk. Fahmi Rizki", hasHosted: false });
                 }
@@ -396,7 +364,7 @@
         }
 
         function saveData() {
-            localStorage.setItem('arisan_v17_perfect_suspense', JSON.stringify(members));
+            localStorage.setItem('arisan_v19_final', JSON.stringify(members));
         }
 
         function updateDashboardStats() {
@@ -407,6 +375,7 @@
             document.getElementById('count-done').innerText = done;
             saveData();
         }
+
         // --- INTERACTIVE POPUP LIST ---
         function showInteractiveList(type) {
             activeListType = type;
@@ -474,10 +443,7 @@
             updateDashboardStats();
             renderInteractiveListContent(); 
         }
-
-        // --- NEW: THE "PERFECT SUSPENSE" ENGINE ---
-        // Algoritma ini menjamin putaran yang panjang (±10 detik), pengereman yang sangat mulus di akhir, 
-        // dan pergeseran nama 1 per 1 tanpa lompat sehingga tidak terkesan dicurangi.
+         // --- THE "PERFECT SUSPENSE" ENGINE ---
         function initiateDraw(isHyperMode = false) {
             if(audioCtx.state === 'suspended') audioCtx.resume();
             if(!isHyperMode) rejectedThisRound = [];
@@ -503,8 +469,6 @@
             const drawScreen = document.getElementById('draw-screen');
             const bgGlow = document.getElementById('draw-bg-glow');
             const subtitle = document.getElementById('draw-subtitle');
-            const lineTop = document.getElementById('line-top');
-            const lineBottom = document.getElementById('line-bottom');
             
             dashboard.style.opacity = '0';
             setTimeout(() => { dashboard.classList.add('hidden'); }, 500);
@@ -519,8 +483,6 @@
                 bgGlow.className = 'absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.2)_0%,rgba(2,6,23,1)_70%)] transition-colors duration-500';
                 subtitle.innerText = "Mencari Kandidat Pengganti...";
                 subtitle.className = "absolute -top-10 md:-top-14 left-0 right-0 text-red-500 tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-lg uppercase opacity-90 font-bold transition-colors animate-pulse text-center px-4";
-                lineTop.className = "absolute top-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-red-500 to-transparent transition-colors";
-                lineBottom.className = "absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-red-500 to-transparent transition-colors";
                 document.getElementById('rolling-name').classList.add('text-hyper');
                 document.getElementById('rolling-name').classList.remove('text-white');
             } else {
@@ -528,8 +490,6 @@
                 bgGlow.className = 'absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(202,138,4,0.15)_0%,rgba(2,6,23,1)_70%)] transition-colors duration-1000';
                 subtitle.innerText = "Mengacak Tuan Rumah...";
                 subtitle.className = "absolute -top-10 md:-top-14 left-0 right-0 text-brand-500 tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-lg uppercase opacity-70 font-medium transition-colors text-center px-4";
-                lineTop.className = "absolute top-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent transition-colors";
-                lineBottom.className = "absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 max-w-4xl h-px bg-gradient-to-r from-transparent via-brand-500/80 to-transparent transition-colors";
                 document.getElementById('rolling-name').classList.remove('text-hyper');
                 document.getElementById('rolling-name').classList.add('text-white');
             }
@@ -537,13 +497,9 @@
 
         function runPerfectSuspenseEngine(eligibleNames, isHyper) {
             const rollingName = document.getElementById('rolling-name');
-
-            // 1. Tentukan pemenang (secara random adil)
             const winnerIndex = Math.floor(Math.random() * eligibleNames.length);
             const winner = eligibleNames[winnerIndex];
-
-            // 2. Bangun urutan pergantian (Sequence)
-            const totalTicks = isHyper ? 40 : 75; // 75 Ticks akan makan waktu sekitar ~10 detik
+            const totalTicks = isHyper ? 40 : 75; 
             const sequence = [];
             let lastAdded = "";
 
@@ -551,56 +507,42 @@
                 let nextName;
                 do {
                     nextName = eligibleNames[Math.floor(Math.random() * eligibleNames.length)].name;
-                } while (nextName === lastAdded && eligibleNames.length > 1); // Jangan ada nama kembar dempet
+                } while (nextName === lastAdded && eligibleNames.length > 1); 
                 sequence.push(nextName);
                 lastAdded = nextName;
             }
-            // Pastikan 1 nama terakhir sebelum berhenti BUKAN nama pemenang (agar natural)
+            
             if(eligibleNames.length > 1 && sequence[sequence.length - 1] === winner.name) {
                 let altName = eligibleNames.find(n => n.name !== winner.name).name;
                 sequence[sequence.length - 1] = altName;
             }
             
-            sequence.push(winner.name); // Nama terakhir pasti pemenang
+            sequence.push(winner.name);
 
             let currentTick = 0;
 
             function tick() {
-                // Tampilkan nama di layar
                 rollingName.innerText = sequence[currentTick];
-                
-                // Efek detak jantung visual
                 rollingName.style.transform = `scale(1.05)`;
                 setTimeout(() => { rollingName.style.transform = 'scale(1)'; }, 50);
 
-                // Progress dari 0.0 sampai 1.0
                 const progress = currentTick / (totalTicks - 1);
-                
-                // Suara merendah seiring berjalannya waktu
                 const pitch = 800 - (progress * 500); 
                 playBeep(pitch, 0.05, 'square');
 
                 currentTick++;
 
                 if (currentTick < totalTicks) {
-                    // MENGHITUNG JEDA (DELAY) MENUJU NAMA SELANJUTNYA
-                    // Dimulai dari sangat cepat (40ms) menuju sangat lambat (1200ms)
                     const baseDelay = isHyper ? 30 : 40;
                     const maxDelay = isHyper ? 600 : 1200;
-                    
-                    // Pangkat 5 (power 5) membuat pengereman baru terasa ekstrem di detik-detik terakhir
                     const easingPower = isHyper ? 3 : 5; 
-                    
                     const delay = baseDelay + (Math.pow(progress, easingPower) * maxDelay);
-                    
                     setTimeout(tick, delay);
                 } else {
                     currentWinnerName = winner.name;
                     finishDraw(isHyper);
                 }
             }
-
-            // Memulai mesin
             tick();
         }
 
@@ -613,7 +555,6 @@
             rollingName.classList.remove('motion-blur');
             drawScreen.classList.remove('hyper-shake');
             
-            // Beri jeda 1 detik di layar nama sebelum muncul modal pemenang (menambah kepuasan)
             setTimeout(() => {
                 drawScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -635,30 +576,9 @@
                     modalHost.style.opacity = '1';
                     
                     playSuccessSound();
-                    celebrate();
+                    celebrateGrand(); // MENGGUNAKAN EFEK FIREWORKS RAKSASA
                 }, 500);
             }, 1200); 
-        }
-
-        // --- NEW: AUTO POPULATE DROPDOWN ROUND ---
-        function populateRoundSelect() {
-            const select = document.getElementById('f-round');
-            select.innerHTML = '';
-            
-            const totalMembers = members.length;
-            const currentHostedCount = members.filter(m => m.hasHosted).length;
-            
-            for(let i = 1; i <= totalMembers; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.text = `Pertemuan Ke-${i}`;
-                option.className = "bg-[#0f172a] text-white"; 
-                
-                // Pilih otomatis berdasarkan jumlah keluarga yang sudah hosting
-                if(i === currentHostedCount) option.selected = true;
-                
-                select.appendChild(option);
-            }
         }
 
         function confirmHost() {
@@ -666,9 +586,7 @@
             if(idx !== -1) members[idx].hasHosted = true; 
             
             document.getElementById('host-controls').classList.add('hidden');
-            
             populateRoundSelect();
-            
             document.getElementById('wa-form').classList.remove('hidden');
             updateDashboardStats();
             generateWAPreview(); 
@@ -704,7 +622,95 @@
                 dashboard.style.opacity = '1';
             }, 500);
         }
-         // --- MEMBER MANAGER ---
+
+        // --- NEW: GRAND CELEBRATION (FIREWORKS & CONFETTI) ---
+        function celebrateGrand() {
+            const duration = 5 * 1000;
+            const end = Date.now() + duration;
+            // Warna-warna meriah ala hajatan
+            const colors = ['#facc15', '#eab308', '#ffffff', '#ef4444', '#3b82f6', '#22c55e'];
+
+            // Tembakan meriam dari kiri dan kanan
+            (function frame() {
+                confetti({
+                    particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.8 }, colors: colors, zIndex: 999999
+                });
+                confetti({
+                    particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.8 }, colors: colors, zIndex: 999999
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+
+            // Ledakan raksasa di tengah
+            confetti({
+                particleCount: 150, spread: 100, origin: { y: 0.4 }, colors: colors, zIndex: 999999
+            });
+        }
+
+        // --- WA INVITE WITH EXACT FORMAL STRUCTURE ---
+        function populateRoundSelect() {
+            const select = document.getElementById('f-round');
+            select.innerHTML = '';
+            const totalMembers = members.length;
+            const currentHostedCount = members.filter(m => m.hasHosted).length;
+            
+            for(let i = 1; i <= totalMembers; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.text = `Pertemuan Ke-${i}`;
+                option.className = "bg-[#0f172a] text-white"; 
+                if(i === currentHostedCount) option.selected = true;
+                select.appendChild(option);
+            }
+        }
+
+        function generateWAPreview() {
+            const round = document.getElementById('f-round').value || "...";
+            const time = document.getElementById('f-time').value || "...";
+            const dateVal = document.getElementById('f-date').value;
+            
+            let dateStr = "...";
+            let dayStr = "...";
+            
+            if(dateVal) {
+                const d = new Date(dateVal);
+                const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+                const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                dayStr = days[d.getDay()];
+                dateStr = `${d.getDate()} ${months[d.getMonth()].toUpperCase()} ${d.getFullYear()}`;
+            }
+
+            const msg = `Assalamualaikum Warahmatullahi Wabarakatuh.
+
+Kepada seluruh keluarga besar BANI SUBANDI.
+Bersama pesan ini, kami bermaksud mengundang Bapak/Ibu/Saudara/i sekalian untuk hadir pada acara silaturahmi rutin keluarga kita.
+
+Alhamdulillah, bahwasannya pertemuan yang ke-${round} insya Allah akan dilaksanakan pada:
+
+📅 HARI/TANGGAL : ${dayStr}, ${dateStr}
+⏰ PUKUL : ${time} WIB
+🏠 TEMPAT : Kediaman ${currentWinnerName}
+
+Semoga semuanya bisa hadir tepat waktu.
+Semoga perjalanan saudara-saudaraku sekalian menuju tempat sohibul bait dicatat sebagai nilai ibadah yang selalu mendapatkan ridho dari Allah SWT. Amin Ya Rabbal Alamin.
+
+Demikian undangan ini kami sampaikan. Jazakumullah khairan katsiran atas perhatian dan kehadirannya.
+
+Wassalamualaikum Warahmatullahi Wabarakatuh.`;
+            
+            document.getElementById('wa-preview-text').value = msg;
+        }
+
+        function sendInvite() {
+            const finalMessage = document.getElementById('wa-preview-text').value;
+            if(!finalMessage) return;
+            window.open(`https://wa.me/?text=${encodeURIComponent(finalMessage)}`, '_blank');
+        }
+
+        // --- MEMBER MANAGER LOGIC ---
         function showMemberManager() {
             const list = document.getElementById('manage-list');
             list.innerHTML = members.map(m => `
@@ -771,7 +777,6 @@
             saveData();
         }
 
-        // --- BACKUP & RESTORE ---
         function exportData() {
             const dataStr = JSON.stringify(members);
             navigator.clipboard.writeText(dataStr).then(() => {
@@ -798,32 +803,6 @@
                     alert("Gagal membaca kode data yang dimasukkan.");
                 }
             }
-        }
-
-        // --- WA INVITE WITH EDITABLE PREVIEW ---
-        function generateWAPreview() {
-            const round = document.getElementById('f-round').value || "?";
-            const time = document.getElementById('f-time').value || "[... WIB]";
-            const dateVal = document.getElementById('f-date').value;
-            const loc = document.getElementById('f-loc').value || "Sesuai kesepakatan keluarga";
-            
-            let dateStr = "[Hari, Tanggal]";
-            if(dateVal) {
-                const d = new Date(dateVal);
-                const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-                const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-                dateStr = `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-            }
-
-            const msg = `*UNDANGAN SILATURAHMI BANI SUBANDI*\n\nAssalamualaikum Wr. Wb.\n\nAlhamdulillah, hasil penentuan sistem arisan telah menetapkan tuan rumah untuk pertemuan silaturahmi kita selanjutnya:\n\n🏠 *SOHIBUL BAIT:* ${currentWinnerName}\n🔢 *PERTEMUAN KE:* ${round}\n📅 *HARI/TGL:* ${dateStr}\n⏰ *WAKTU:* ${time} - Selesai\n📍 *LOKASI/CATATAN:* ${loc}\n\nBesar harapan kami agar seluruh anggota keluarga dapat meluangkan waktu untuk hadir demi menjaga dan mempererat tali silaturahmi.\n\nWassalamualaikum Wr. Wb.`;
-            
-            document.getElementById('wa-preview-text').value = msg;
-        }
-
-        function sendInvite() {
-            const finalMessage = document.getElementById('wa-preview-text').value;
-            if(!finalMessage) return;
-            window.open(`https://wa.me/?text=${encodeURIComponent(finalMessage)}`, '_blank');
         }
 
         init();
